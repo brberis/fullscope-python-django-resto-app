@@ -11,6 +11,7 @@ router = routers.DefaultRouter()
 router.register(r'products', ItemViewSet)
 
 urlpatterns = [
+    path('signpage/', include('signpage.urls')),
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls'))
