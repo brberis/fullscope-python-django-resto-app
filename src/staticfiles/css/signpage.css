@@ -43,7 +43,8 @@ body {
 }
 
 .menu-board {
-	width: 800px;
+	width: 3840px;
+	height: 2160px;
 	padding: 3em 1em;
 	color: var(--white);
 	background-color: #1f1f1f;
@@ -51,7 +52,7 @@ body {
 	display: grid;
 	place-items: center;
 	margin: 2em 0;
-	border: 20px solid rgb(150, 92, 5);
+	/* border: 20px solid rgb(150, 92, 5); */
 	box-shadow: rgba(50, 50, 93, 0.5) 0px 30px 60px -12px inset,
 		rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
