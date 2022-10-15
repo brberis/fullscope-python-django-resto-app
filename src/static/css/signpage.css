@@ -57,9 +57,9 @@ body {
 	padding: 3em 5em;
 	color: var(--white);
 	background-color: black;
-	background-image: linear-gradient(rgba(2, 2, 2, 0.5), rgba(2, 2, 2, 0.5)), url("../images/black-2.jpg");
-	background-repeat: no-repeat;
-  background-size: 100%;
+	background-image: linear-gradient(rgba(2, 2, 2, 0.7), rgba(2, 2, 2, 0.7)), url("../images/black-2.jpg");
+	/* background-repeat: no-repeat; */
+  background-size: 100% 100%;
 	display: grid;
 	place-items: center;
 }
@@ -146,9 +146,11 @@ body {
 	height: 25px;
 }
 
-.prices h1{
-	font-size: 35px;
+.prices h1, span{
+	font-size: 32px;
 	color: rgba(255, 254, 221, 0.841);
+	line-height: 80%;
+		
 }
 
 .menu-item {
@@ -161,7 +163,7 @@ body {
 	align-items: center;
 }
 .menu-item h3 {
-	font-size: 1.6em;
+	font-size: 2.2em;
 	font-family: "Hesster Mofet_clean", sans-serif;
 	grid-column: 1/2;
 	grid-row: 1/2;
