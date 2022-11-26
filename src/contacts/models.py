@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.conf import settings
 
 CONTACT_TYPE = (
-    ('Costumer', 'Costumer'),
+    ('Customer', 'Customer'),
     ('Vendor', 'Vendor')
 )
 
