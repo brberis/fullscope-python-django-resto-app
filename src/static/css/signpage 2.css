@@ -1,0 +1,210 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+p {
+	margin-top: 0;
+	margin-bottom: 2px !important;
+}
+
+h1 {
+	margin-top: 0;
+	margin-bottom: 2px !important;
+}
+
+@font-face {
+	font-family: "Hesster Mofet_clean";
+	src: url("https://www.sicontis.com/codepen/cpc-food-truck/fonts/hesstermofetclean-webfont.woff")
+		format("woff");
+}
+
+@font-face {
+	font-family: "Hesster Mofet_dirty";
+	src: url("https://www.sicontis.com/codepen/cpc-food-truck/fonts/hesstermofetdirty-webfont.woff")
+		format("woff");
+}
+
+@font-face {
+	font-family: "KG Tangled";
+	src: url("https://www.sicontis.com/codepen/cpc-food-truck/fonts/kgtangledupinyou-webfont.woff")
+		format("woff");
+}
+
+@font-face {
+	font-family: "KG Tangled 2";
+	src: url("https://www.sicontis.com/codepen/cpc-food-truck/fonts/kgtangledupinyou2-webfont.woff")
+		format("woff");
+}
+
+body {
+	min-height: 100vh;
+	display: grid;
+	place-items: center;
+	font-family: "KG Tangled", sans-serif;
+
+	--crimson: #f884d2;
+	--blue: #31bdf5;
+	--white: #f0f0f0;
+
+	background-color: var(rgb(26, 26, 26));
+}
+
+.menu-board {
+	width: 100%;
+	height: 100%;
+	padding: 3em 5em;
+	color: var(--white);
+	background-color: black;
+	background-image: linear-gradient(rgba(2, 2, 2, 0.7), rgba(2, 2, 2, 0.7)), url("../images/black-2.jpg");
+	/* background-repeat: no-repeat; */
+  background-size: 100% 100%;
+	display: grid;
+	place-items: center;
+}
+
+.logo {
+	position: relative;
+	margin-bottom: 2em;
+}
+.logo svg {
+	width: 253px;
+	height: 136px;
+	fill: var(--white);
+}
+.logo h1 {
+	position: absolute;
+	top: 0px;
+	left: 50%;
+	transform: translateX(-50%) rotateZ(-20deg) skew(-20deg);
+	font-family: "Hesster Mofet_dirty", sans-serif;
+	color: var(--crimson);
+}
+.logo h3 {
+	position: absolute;
+	top: 40px;
+	left: 50%;
+	transform: translateX(-50%);
+	font-family: "KG Tangled 2", sans-serif;
+	font-size: 3em;
+}
+.logo h2 {
+	position: absolute;
+	top: 80px;
+	left: 50%;
+	transform: translateX(-50%);
+	font-family: "KG Tangled 2", sans-serif;
+	font-size: 2em;
+	letter-spacing: 2px;
+}
+
+.red {
+	color: var(--white);
+}
+.red h1 {
+	color: var(--crimson);
+}
+.red h3 {
+	color: var(--crimson);
+}
+
+.blue {
+	color: var(--white);
+}
+.blue h1 {
+	color: var(--blue);
+}
+.blue h3 {
+	color: var(--blue);
+}
+
+.menu {
+	width: 100%;
+	display: grid;
+	/* grid-template-columns: 60% 40%; */
+	grid-gap: 1em;
+}
+
+.board-item {
+	width: auto;
+	text-align: center;
+	padding: 1em;
+}
+.board-item__title {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.board-item__title h1 {
+	font-family: "KG Tangled", sans-serif;
+	font-size: 2.5em;
+	margin: 0 10px;
+}
+.board-item__title img {
+	width: 67px;
+	height: 25px;
+}
+
+.prices h1, span{
+	font-size: 32px;
+	color: rgba(255, 254, 221, 0.841);
+	line-height: 80%;
+		
+}
+
+.menu-item {
+	text-align: left;
+	margin: 1em 0 1em 0;
+	display: grid;
+	grid-template-columns: 1fr 10%;
+	grid-auto-rows: auto;
+	grid-column-gap: 10px;
+	align-items: center;
+}
+.menu-item h3 {
+	font-size: 2.2em;
+	font-family: "Hesster Mofet_clean", sans-serif;
+	grid-column: 1/2;
+	grid-row: 1/2;
+}
+.menu-item p {
+	font-size: 1.1em;
+	letter-spacing: 1px;
+	grid-column: 1/2;
+	grid-row: 2/3;
+}
+.menu-item span {
+	display: inline-block;
+	grid-column: 2/3;
+	grid-row: 1/3;
+	font-size: 1.8em;
+	margin-left: -80px;
+}
+
+.menu-item-side {
+	text-align: left;
+	margin: 1em 0;
+	display: grid;
+	grid-template-columns: 1fr 10%;
+	align-items: center;
+}
+.menu-item-side h3 {
+	font-size: 1.3em;
+	font-family: "Hesster Mofet_clean", sans-serif;
+	grid-column: 1/2;
+}
+.menu-item-side span {
+	display: inline-block;
+	grid-column: 2/3;
+	font-size: 1.6em;
+}
+
+.separator {
+	text-align: center;
+	margin: 2em 0;
+}
+.separator img {
+	width: 180px;
+	height: 15px;
+}
