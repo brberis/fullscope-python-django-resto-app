@@ -60,7 +60,7 @@ class Item(models.Model):
 
     class Meta:
         ordering = ['order']
-        verbose_name = ('Menu')
-        verbose_name_plural = ('Menu')
+        verbose_name = ('Product')
+        verbose_name_plural = ('Products')
 
 
