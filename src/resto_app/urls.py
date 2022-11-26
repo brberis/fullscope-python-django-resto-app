@@ -8,7 +8,7 @@ from api.views import ItemViewSet
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register(r'products', ItemViewSet)
+router.register(r'inventory', ItemViewSet)
 
 urlpatterns = [
     path('signpage/', include('signpage.urls')),

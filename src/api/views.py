@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from products.models import Item
+from inventory.models import Item
 from .serializers import ItemSerializer
 
 class ItemViewSet(viewsets.ModelViewSet):
