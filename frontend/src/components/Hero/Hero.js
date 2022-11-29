@@ -7,10 +7,6 @@ import Typography from "@mui/material/Typography";
 // import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
-import astronaut from "../../assets/astronaut-cooking.png";
-import fish from "../../assets/fish-camping.png";
-import icecream from "../../assets/icecream-sprinkles.jpg";
-import puppy from "../../assets/puppy-bicycle.png";
 import "./Hero.css";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -45,26 +41,6 @@ export default function Hero() {
             {/* <Button color="secondary" variant="contained">
               Get Started!
             </Button> */}
-          </Item>
-        </Grid>
-        <Grid item xs={3}>
-          <Item className="img-container">
-            <img className="hero-img" alt="astronaut cooking" src={astronaut} />
-          </Item>
-        </Grid>
-        <Grid item xs={3}>
-          <Item className="img-container">
-            <img className="hero-img" alt="icecream sprinkles" src={icecream} />
-          </Item>
-        </Grid>
-        <Grid item xs={3}>
-          <Item className="img-container">
-            <img className="hero-img" alt="fish camping" src={fish} />{" "}
-          </Item>
-        </Grid>
-        <Grid item xs={3}>
-          <Item className="img-container">
-            <img className="hero-img" alt="puppy riding bicycle" src={puppy} />
           </Item>
         </Grid>
         

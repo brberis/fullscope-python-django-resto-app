@@ -6,10 +6,11 @@ import { StoreProvider } from './utils/GlobalState';
 import "@mui/material";
 import "@emotion/react"; 
 import "@emotion/styled"
-import Products from './pages/Products';
-import Contact from './pages/Contact';
+
+// import Products from './pages/Products';
+// import Contact from './pages/Contact';
 import Home from "./pages/Home";
-import Catering from "./pages/Catering";
+// import Catering from "./pages/Catering";
 
 function App() {
 
@@ -21,9 +22,9 @@ function App() {
           <div className="container">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/catering-services" element={<Catering />} />
+              {/* <Route path="/catering-services" element={<Catering />} />
               <Route path="/products" element={<Products />} />
-              <Route path="/contact" element={<Contact />} />
+              <Route path="/contact" element={<Contact />} /> */}
             </Routes>
           </div>
           <Footer />
