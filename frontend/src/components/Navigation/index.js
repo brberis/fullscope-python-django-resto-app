@@ -16,6 +16,7 @@ import FilterDramaIcon from "@mui/icons-material/FilterDrama";
 import SettingsSystemDaydreamTwoToneIcon from "@mui/icons-material/SettingsSystemDaydreamTwoTone";
 import "./navigation.css"
 import { lightBlue } from "@mui/material/colors";
+import logo from "../../assets/images/logo.webp"
 
 
 
@@ -41,11 +42,12 @@ function ResponsiveAppBar() {
 
 
   return (
-    <AppBar position="static"className='gradient'>
+    <AppBar position="static" className='gradient'>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          <img src={logo} alt="img" width="200px"/>
           <FilterDramaIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1, color:lightBlue }}
+            sx={{ display: { xs: "none", md: "flex" }, mr: 1, color:"hsl(0, 100%, 50%)" }}
           />
           <Typography
             variant="h6"
