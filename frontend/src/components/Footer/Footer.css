@@ -1,0 +1,52 @@
+/*Styling the footer*/
+
+
+.content-footer{
+    position: relative;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: rgb(243, 238, 228);
+     
+
+}
+
+.footer  p{
+    display: inline-block;
+    font-size: 20px;
+    font-family: monospace;
+    margin: 0 auto;
+    padding-top: 10px ;
+    justify-content: space-evenly;
+    letter-spacing: 3px;
+    
+    
+}
+
+
+.social-links{
+    padding: 2px;
+    margin: 20px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+ .social-links .social{
+    height: 75px;
+    width: 100px;
+    background-color:transparent;
+    margin: 0 5px;
+    padding: 2px;
+    backdrop-filter: blur;
+    cursor: pointer;
+    transition: .2s ease;
+} 
+
+.copy{
+height: 25px;
+
+}
+
