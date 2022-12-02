@@ -41,6 +41,8 @@ class Item(models.Model):
         null=True,
         blank=True,
         max_length=150)
+    for_sale = models.BooleanField(verbose_name=('For Sale'), default=False)
+
     order = models.PositiveSmallIntegerField(('Order'), default=99, null=True)
     objects = ItemManager()
 
