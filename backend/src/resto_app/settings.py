@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'resto_app',
     'inventory',
     'contacts',
-    'signpage'
+    'signpage',
+    'production'
 ]
 
 MIDDLEWARE = [
