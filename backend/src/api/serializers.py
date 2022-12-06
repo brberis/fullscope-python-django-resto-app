@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from inventory.models import Item, Category, Location
+from inventory.models import Item, Location
+from products.models import Item, Category
 from contacts.models import Company, Person
 
 ## Inventory ##
