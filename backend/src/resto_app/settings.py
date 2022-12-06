@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'resto_app',
     'products',
+    'events',
     'inventory',
     'contacts',
     'signpage',
