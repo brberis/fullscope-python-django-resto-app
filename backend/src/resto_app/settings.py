@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'resto_app',
     'products',
     'events',
+    'billing',
     'inventory',
     'contacts',
     'signpage',
