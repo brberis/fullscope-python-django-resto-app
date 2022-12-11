@@ -193,7 +193,7 @@ body {
 
 .separator {
 	text-align: center;
-	margin: 2em 0;
+	/* margin: 2em 0; */
 }
 .separator img {
 	width: 180px;
