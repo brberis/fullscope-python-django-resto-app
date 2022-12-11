@@ -66,7 +66,7 @@ body {
 
 .logo {
 	position: relative;
-	margin-bottom: 2em;
+	margin-bottom: -2em;
 }
 .logo svg {
 	width: 253px;
@@ -208,4 +208,8 @@ body {
 .separator img {
 	width: 180px;
 	height: 15px;
+}
+
+.top-toppings {
+	margin-top: -15px;
 }
