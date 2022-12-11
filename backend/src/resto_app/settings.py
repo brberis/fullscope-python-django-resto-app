@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'products',
     'events',
     'billing',
+    'services',
     'inventory',
     'contacts',
     'signpage',
