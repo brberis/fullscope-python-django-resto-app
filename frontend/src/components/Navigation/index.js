@@ -1,145 +1,51 @@
-import React , { useState } from 'react';
-import { Link } from "react-router-dom";
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import FilterDramaIcon from "@mui/icons-material/FilterDrama";
-import SettingsSystemDaydreamTwoToneIcon from "@mui/icons-material/SettingsSystemDaydreamTwoTone";
-import "./navigation.css"
-import { lightBlue } from "@mui/material/colors";
-import logo from "../../assets/images/logo.webp"
+const navigation = [
+  { name: 'Solutions', href: '#' },
+  { name: 'Pricing', href: '#' },
+  { name: 'Docs', href: '#' },
+  { name: 'Company', href: '#' },
+]
 
-
-
-const publicPages = [{name: 'Catering Services', link:'/catering-services'}, 
-               {name: 'Products', link:'/products'}, {name: 'Contact Us', link:'/contact-us'}]
-
-
-
-function ResponsiveAppBar() {
-
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-
-
+export default function Example() {
   return (
-    <AppBar position="static" className='gradient'>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <img src={logo} alt="img" width="200px"/>
-          <FilterDramaIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1, color:"hsl(0, 100%, 50%)" }}
-          />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: 'white',
-              textDecoration: "none",
-              padding: "2px 0 0 0",
-            }}
-          >
-            Tipsy Udder
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
+    <header className="bg-indigo-600">
+      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Top">
+        <div className="flex w-full items-center justify-between border-b border-indigo-500 py-6 lg:border-none">
+          <div className="flex items-center">
+            <a href="#">
+              <span className="sr-only">Your Company</span>
+              <img className="h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=white" alt="" />
+            </a>
+            <div className="ml-10 hidden space-x-8 lg:block">
+              {navigation.map((link) => (
+                <a key={link.name} href={link.href} className="text-base font-medium text-white hover:text-indigo-50">
+                  {link.name}
+                </a>
+              ))}
+            </div>
+          </div>
+          <div className="ml-10 space-x-4">
+            <a
+              href="#"
+              className="inline-block rounded-md border border-transparent bg-indigo-500 py-2 px-4 text-base font-medium text-white hover:bg-opacity-75"
             >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
+              Sign in
+            </a>
+            <a
+              href="#"
+              className="inline-block rounded-md border border-transparent bg-white py-2 px-4 text-base font-medium text-indigo-600 hover:bg-indigo-50"
             >
-            
-            </Menu>
-          </Box>
-          <SettingsSystemDaydreamTwoToneIcon
-            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-          />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "white",
-              textDecoration: "none",
-            }}
-          >
-            Tipsy Udder
-          </Typography>
-          <Box justifyContent="flex-end" sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, mr: 7}}>
-            <>
-              <Button
-                component={Link} to='/products'
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                Products
-              </Button>
-              <Button
-                component={Link} to='/catering-services'
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                Catering Services
-              </Button>
-              </>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
-  );
+              Sign up
+            </a>
+          </div>
+        </div>
+        <div className="flex flex-wrap justify-center space-x-6 py-4 lg:hidden">
+          {navigation.map((link) => (
+            <a key={link.name} href={link.href} className="text-base font-medium text-white hover:text-indigo-50">
+              {link.name}
+            </a>
+          ))}
+        </div>
+      </nav>
+    </header>
+  )
 }
-export default ResponsiveAppBar;
