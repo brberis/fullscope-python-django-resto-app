@@ -9,7 +9,7 @@ def on_auth():
 # ip address of your tv... the device name is the name under which
 # your program will be registered... note that if you change the device
 # name, you have to re-auth
-config = TVConfig('192.168.0.23', 'my device name')
+config = TVConfig('192.168.50.226', 'Bravia')
 tv = TV.connect(config, on_auth)
 
 tv.is_on() # true/false
