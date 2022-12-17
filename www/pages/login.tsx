@@ -113,7 +113,7 @@ const Login: React.SFC = (): React.ReactElement => {
             <p className="text-gray-700">
               No account?{" "}
               <Link href="/signup">
-                <a>Sign up</a>
+                Sign up
               </Link>
               .
             </p>

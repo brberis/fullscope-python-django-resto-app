@@ -1,4 +1,5 @@
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 const Layout = ({children}): React.ReactElement => {
   return (
@@ -7,6 +8,7 @@ const Layout = ({children}): React.ReactElement => {
       <div className="max-w-md mx-auto">
         {children}
       </div>
+      <Footer />
     </div>
   )
 }

@@ -59,10 +59,8 @@ export default function Navbar() {
                     {isAuthenticated ? (
                       <>
                         {authNavigation.map((item) => (
-                          <Link href={item.href}>
-                            <a
+                          <Link href={item.href}
                               key={item.name}
-                              href='#'
                               className={classNames(
                                 item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                                 'px-3 py-2 rounded-md text-sm font-medium'
@@ -70,7 +68,7 @@ export default function Navbar() {
                               aria-current={item.current ? 'page' : undefined}
                             >
                               {item.name}
-                            </a>
+                       
                           </Link>
                         ))}
                       </>
@@ -78,10 +76,8 @@ export default function Navbar() {
 
                     <>
                       {navigation.map((item) => (
-                        <Link href={item.href}>
-                          <a
+                        <Link href={item.href}
                             key={item.name}
-                            href='#'
                             className={classNames(
                               item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                               'px-3 py-2 rounded-md text-sm font-medium'
@@ -89,7 +85,6 @@ export default function Navbar() {
                             aria-current={item.current ? 'page' : undefined}
                           >
                             {item.name}
-                          </a>
                         </Link>
                       ))}
                     </>
@@ -98,17 +93,19 @@ export default function Navbar() {
                 </div>
 
               </div>
-              <div className="flex-shrink-0">
-                <Link href="/login">
-                  <button
-                    type="button"
-                    className="relative inline-flex items-center rounded-md border border-transparent bg-indigo-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800"
-                  >
-                    <UserIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-                    <span>Login</span>
-                  </button>
-                </Link>
-              </div>      
+              {!isAuthenticated ? (
+                <div className="flex-shrink-0">
+                  <Link href="/login">
+                    <button
+                      type="button"
+                      className="relative inline-flex items-center rounded-md border border-transparent bg-indigo-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                    >
+                      <UserIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+                      <span>Login</span>
+                    </button>
+                  </Link>
+                </div>      
+              ) : null }
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {isAuthenticated ? (
                   <>
