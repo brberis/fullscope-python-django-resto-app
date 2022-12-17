@@ -11,6 +11,7 @@ interface User {
 
 interface TokenResponse {
   access: string;
+  refresh: string;
   access_expires: number;
 }
 
@@ -33,11 +34,15 @@ const fetchToken = (username: string, password: string): Promise<Response> => {
 
 const fetchNewToken = (): Promise<Response> => {
   const url = makeUrl("/token/refresh/");
+  let refreshToken = localStorage.getItem('refresh');
+  console.log(JSON.stringify({ refresh: refreshToken }))
   return fetch(url, {
     method: "POST",
+    body: JSON.stringify({ refresh: refreshToken }),
     headers: {
       "Content-Type": "application/json",
     },
+
     credentials: "include"
   });
 };
@@ -81,6 +86,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): React.ReactNode =
   };
 
   const accessTokenIsValid = (): boolean => {
+    
     if (accessToken === "") {
       return false;
     }
@@ -91,6 +97,8 @@ export const AuthProvider = ({ children }: AuthProviderProps): React.ReactNode =
 
   const initAuth = async (): Promise<void> => {
     setLoading(true);
+    let access = localStorage.getItem('access');
+    setAccessToken(access);
     if (!accessTokenIsValid()) {
       console.log("Invalid access token so refetching")
       await refreshToken();
@@ -128,6 +136,9 @@ export const AuthProvider = ({ children }: AuthProviderProps): React.ReactNode =
 
   const handleNewToken = (data: TokenResponse): void => {
     setAccessToken(data.access);
+    localStorage.setItem('access', data.access);
+    localStorage.setItem('refresh', data.refresh);
+    
     const expiryInt = data.access_expires * 1000;
     setAccessTokenExpiry(expiryInt);
     setIsAuthenticated(true);

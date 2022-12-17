@@ -1,7 +1,10 @@
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
-
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 from . import views
 from . import jwt_views
 
@@ -12,7 +15,7 @@ urlpatterns = [
     path("me/", views.Profile.as_view(), name="me"),
     path("token/", jwt_views.Login.as_view(), name="token"),
     path(
-        "token/refresh/", jwt_views.RefreshToken.as_view(),
+        "token/refresh/", TokenRefreshView.as_view(),
         name="token-refresh"
     ),
     path("token/logout/", jwt_views.Logout.as_view(), name="logout"),
