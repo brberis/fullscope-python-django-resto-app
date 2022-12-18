@@ -25,5 +25,5 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ]
+, "pages/logout.js", "components/Navbar.js", "components/Layout.js", "components/Footer.js", "pages/login.js", "pages/login.js"  ]
 }

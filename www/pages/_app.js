@@ -1,10 +1,13 @@
-import { AuthProvider } from "../auth";
 import "../styles.css";
-function App({ Component, pageProps }) {
+import { Provider } from 'react-redux';
+import { useStore } from '../store';
+
+export default function App({ Component, pageProps }) {
+  const store = useStore(pageProps.initialReduxState);
+
   return (
-    <AuthProvider>
-      <Component {...pageProps} />;
-    </AuthProvider>
+    <Provider store={store}>
+      <Component {...pageProps} />
+    </Provider>
   );
 }
-export default App;

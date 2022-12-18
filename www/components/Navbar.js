@@ -1,8 +1,9 @@
 import { Fragment } from 'react'
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Link from "next/link";
-import { useAuth } from "../auth";
 import { UserIcon } from '@heroicons/react/20/solid'
 
 const navigation = [
@@ -22,7 +23,14 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  const { isAuthenticated } = useAuth();
+  const router = useRouter();
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const user = useSelector(state => state.auth.user);
+  const loading = useSelector(state => state.auth.loading);
+
+  if (typeof window !== 'undefined' && !loading && !isAuthenticated && router.pathname === '/dashboard') {
+    router.push('/login');
+  }
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
