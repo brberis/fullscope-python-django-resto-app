@@ -1,13 +1,17 @@
 from django.utils import timezone
-from rest_framework import generics, response
+from rest_framework import generics, response, viewsets
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import permissions, status
 from rest_framework.views import APIView
+
 from django.shortcuts import render
 from django.contrib.auth.models import User
 
 from . import serializers
+
+from app.events import models as event_models
+
 
 
 class Profile(generics.RetrieveAPIView):
@@ -16,14 +20,6 @@ class Profile(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
-
-
-class Ping(generics.GenericAPIView):
-    permission_classes = (IsAuthenticated,)
-
-    def get(self, *args, **kwargs):
-        return Response({'now': timezone.now().isoformat()})
-
 
 class RegisterView(APIView):
     permission_classes = (permissions.AllowAny,)
@@ -100,3 +96,6 @@ class LoadUserView(APIView):
             )
 
 
+class EventViewSet(viewsets.ModelViewSet):
+    queryset = event_models.Event.objects.all()
+    serializer_class = serializers.Event

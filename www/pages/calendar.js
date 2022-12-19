@@ -1,5 +1,9 @@
+import { useState, useEffect } from 'react';
 import { Fragment } from 'react'
 import Layout from "../components/Layout";
+import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+import * as eventActions from '../actions/events';
 
 import {
   ChevronDownIcon,
@@ -88,6 +92,26 @@ function classNames(...classes) {
 }
 
 export default function Calendar() {
+  // const [events, setEvents] = useState(eventActions.loadEvents());
+  const router = useRouter();
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const user = useSelector(state => state.auth.user);
+
+  const dispatch = useDispatch();
+  const events = useSelector(state => state.events);
+
+  useEffect(() => {
+    dispatch(eventActions.loadEvents());
+    console.log('events', events);
+  }, [dispatch]);
+
+
+  const loading = useSelector(state => state.auth.loading);
+
+  if (typeof window !== 'undefined' && !loading && !isAuthenticated) {
+    // router.push('/login');
+  }
+
   return (
     <Layout>
       <div className="lg:flex lg:h-full lg:flex-col">
