@@ -97,13 +97,19 @@ export default function Calendar() {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const user = useSelector(state => state.auth.user);
 
-  const dispatch = useDispatch();
   const events = useSelector(state => state.events);
 
-  useEffect(() => {
+  const dispatch = useDispatch();
+
+// React.useEffect(() => {
+// dispatch(fetchData());
+// }, [dispatch]);
+
+
+  useEffect( () => {
     dispatch(eventActions.loadEvents());
-    console.log('events', events);
   }, [dispatch]);
+  console.log('events', events);
 
 
   const loading = useSelector(state => state.auth.loading);

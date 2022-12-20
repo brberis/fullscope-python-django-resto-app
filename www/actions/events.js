@@ -44,7 +44,7 @@ import {
   
   export const loadEvents = () => async dispatch => {
     try {
-      const res = await fetch('/api/events', {
+         const res = await fetch('http://localhost:4001/api/events', {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -52,6 +52,8 @@ import {
       });
   
       const data = await res.json();
+      console.log('>>>Fetching data', await data);
+
   
       if (res.status === 200) {
         dispatch({
