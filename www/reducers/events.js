@@ -26,7 +26,7 @@ import {
       case LOAD_EVENT_CATEGORIES_SUCCESS:
         return {
           ...state,
-          eventCategories: payload.event_categories,
+          eventCategories: payload,
         };
       case LOAD_EVENT_CATEGORIES_FAIL:
         return {
@@ -35,7 +35,7 @@ import {
       case LOAD_EVENTS_SUCCESS:
         return {
           ...state,
-          events: payload.events,
+          events: payload,
         };
       case LOAD_EVENTS_FAIL:
         return {

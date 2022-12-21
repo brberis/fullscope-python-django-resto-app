@@ -14,9 +14,12 @@ import {
 
   } from './types';
   
+const API_URL = process.env.NEXT_PUBLIC_API_HOST;
+const createUrl = (urlSection) => API_URL + urlSection;
+
   export const loadEventCategories = () => async dispatch => {
     try {
-      const res = await fetch('/api/event-categories', {
+      const res = await fetch(createUrl('/api/event-categories'), {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -44,7 +47,7 @@ import {
   
   export const loadEvents = () => async dispatch => {
     try {
-         const res = await fetch('http://localhost:4001/api/events', {
+         const res = await fetch(createUrl('/api/events'), {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -52,8 +55,6 @@ import {
       });
   
       const data = await res.json();
-      console.log('>>>Fetching data', await data);
-
   
       if (res.status === 200) {
         dispatch({
