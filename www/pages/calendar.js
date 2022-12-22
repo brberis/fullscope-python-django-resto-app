@@ -107,6 +107,10 @@ export default function Calendar() {
   const dispatch = useDispatch();
 
   useEffect( () => {
+    setDays(eventCalendarData(events.events));
+  }, [events]);
+
+  useEffect( () => {
     setSelectedDay(days.find((day) => day.isSelected));
   }, [days]);
 

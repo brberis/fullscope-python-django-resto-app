@@ -1,5 +1,6 @@
 // convert events into monthly calendar data view
 export function eventCalendarData(events) {
+  console.log('>>>>>>>>>>', events);
   
   const date = new Date();
 
@@ -29,15 +30,23 @@ export function eventCalendarData(events) {
   
   const currentDays = [];
   for (let i = 1; i <= numDaysInMonth; i++) {
-    // for (let j = 0; j < events.length; j++) {
-    //   const element = array[j];
-      
-    // }
     let newDate = convertDate(new Date(date.getFullYear(), date.getMonth(), i));
+    let calendarEvents = [];
+    for (let j = 0; j < events?.length; j++) {
+      if (events[j].event_date === newDate) {
+        calendarEvents.push({
+          id: events[j].id,
+          name: events[j].title,
+          time: events[j].start_time,
+          datetime: events[j].datetime,
+          href: '#',
+        });
+      }
+    }
     currentDays.push({
       date: newDate,
       isCurrentMonth: true,
-      events: []
+      events: calendarEvents
     });
   }
   
