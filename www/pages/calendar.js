@@ -26,7 +26,7 @@ export default function Calendar() {
   const [days, setDays] = useState(eventCalendarData());
   const [selectedDay, setSelectedDay] = useState(null);
   const [isOpen, setIsOpen] = useState(false)
-  
+
   // const [events, setEvents] = useState(eventActions.loadEvents());
   const router = useRouter();
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
