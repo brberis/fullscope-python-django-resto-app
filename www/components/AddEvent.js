@@ -19,6 +19,15 @@ export default function AddEvent(props) {
   const formHandler = (e) => {
     e.preventDefault()
     console.log(e.target.description.value);
+    const newEvent = {
+                    title: e.target.description.value,
+                    description: e.target.description.value,
+                    date: selected,
+                    time: `${e.target.hour.value}:${e.target.minutes.value}:00 ${e.target.halves.value}`,
+                    category: e.target.category.value,
+
+                    };
+    handleClose(newEvent)
   }
 
 
