@@ -16,6 +16,12 @@ export default function AddEvent(props) {
     props.onClose(result)
   }
 
+  const formHandler = (e) => {
+    e.preventDefault()
+    console.log(e.target.description.value);
+  }
+
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={handleClose}>
@@ -49,7 +55,7 @@ export default function AddEvent(props) {
                   </Dialog.Title>
                   <div className="mt-3 text-left sm:mt-5">
                     <div className="mt-2">
-                    <form className="space-y-8 divide-y divide-gray-200">
+                    <form onSubmit={formHandler} className="space-y-8 divide-y divide-gray-200">
                       <div className="space-y-8 divide-y divide-gray-200">
                         <div>
                           <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
@@ -65,7 +71,7 @@ export default function AddEvent(props) {
                                 Time
                               </label>
                               <div className="inline-flex text-lg border rounded-md p-1">
-                                <select name="" id="" defaultValue="09" className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                <select name="hour" id="hour" defaultValue="09" className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                   <option value="01">01</option>
                                   <option value="02">02</option>
                                   <option value="03">03</option>
@@ -80,13 +86,13 @@ export default function AddEvent(props) {
                                   <option value="12">12</option>
                                 </select>
                                 <span className="px-2">:</span>
-                                <select name="" id="" className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                <select name="minutes" id="minutes" className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                   <option value="00">00</option>
                                   <option value="15">15</option>
                                   <option value="30">30</option>
                                   <option value="45">45</option>
                                 </select>
-                                <select name="" id="" className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                <select name="halves" id="halves" className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                   <option value="AM">AM</option>
                                   <option value="PM">PM</option>
                                 </select>
