@@ -22,9 +22,8 @@ export default function AddEvent(props) {
 
   const formHandler = async (e) => {
     e.preventDefault()
-    console.log(e.target.description.value);
     const newEvent = {
-                    title: e.target.description.value,
+                    title: e.target.title.value,
                     description: e.target.description.value,
                     event_date: selected.toISOString().split('T')[0],
                     start_time: timeTo24hours(`${e.target.hour.value}:${e.target.minutes.value} ${e.target.halves.value}`),

@@ -26,6 +26,7 @@ export default function Calendar() {
   const [days, setDays] = useState(eventCalendarData());
   const [selectedDay, setSelectedDay] = useState(null);
   const [isOpen, setIsOpen] = useState(false)
+  const [eventAdded, SetEventAdded] = useState(null)
 
   // const [events, setEvents] = useState(eventActions.loadEvents());
   const router = useRouter();
@@ -48,18 +49,18 @@ export default function Calendar() {
   // define the onClose callback function
   const handleClose = (result) => {
     setIsOpen(false);
-    console.log('RESSSULT', result)
+    SetEventAdded(result);
+
   }
-
-
+  
   useEffect( () => {
     setSelectedDay(days.find((day) => day.isSelected));
   }, [days]);
 
+  // render events in calendar
   useEffect( () => {
     dispatch(eventActions.loadEvents());
-  }, [dispatch]);
-  console.log('events', events.events);
+  }, [dispatch, eventAdded]);
 
 
   const loading = useSelector(state => state.auth.loading);
