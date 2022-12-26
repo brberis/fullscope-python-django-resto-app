@@ -96,6 +96,10 @@ class LoadUserView(APIView):
             )
 
 
+class EventCatViewSet(viewsets.ModelViewSet):
+    queryset = event_models.EventCategory.objects.all()
+    serializer_class = serializers.EventCategory
+
 class EventViewSet(viewsets.ModelViewSet):
     queryset = event_models.Event.objects.all()
     serializer_class = serializers.Event

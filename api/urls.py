@@ -14,6 +14,7 @@ urlpatterns = [
     path('api/account/register', views.RegisterView.as_view()),
     path('api/account/user', views.LoadUserView.as_view()),
     path('api/events', views.EventViewSet.as_view({'get': 'list'}), name='event-list'),
+    path('api/event-categories', views.EventCatViewSet.as_view({'get': 'list'}), name='event-list'),
     path('api/event-create', views.EventCreate.as_view(), name='create_event'),
     path('api/events/<int:pk>/', views.EventViewSet.as_view({'get': 'retrieve'}), name='event-detail'),
     path("admin/", admin.site.urls),

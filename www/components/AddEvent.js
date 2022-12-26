@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { DayPicker } from 'react-day-picker';
 import { useRouter } from 'next/router';
@@ -11,6 +11,7 @@ export default function AddEvent(props) {
   const [open, setOpen] = useState(props.isOpen)
   const [selected, setSelected] = useState(Date);
   const dispatch = useDispatch();
+  const categories = useSelector(state => state.events.eventCategories);
 
   // define a callback function that accepts a variable as an argument
   const handleClose = (result) => {
@@ -19,6 +20,10 @@ export default function AddEvent(props) {
     // call the onClose callback function with the result variable
     props.onClose(result)
   }
+
+  useEffect( () => {
+    dispatch(eventActions.loadEventCategories());
+  }, [dispatch]);
 
   const formHandler = async (e) => {
     e.preventDefault()
@@ -29,8 +34,7 @@ export default function AddEvent(props) {
                     start_time: timeTo24hours(`${e.target.hour.value}:${e.target.minutes.value} ${e.target.halves.value}`),
                     // end_time: '12:00 AM',
                     // category: e.target.category.value,
-                    category: 1
-
+                    category: e.target.category.value
                     };
 
     await dispatch(eventActions.createEvents(newEvent));
@@ -157,7 +161,7 @@ export default function AddEvent(props) {
                                   autoComplete="category-name"
                                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 >
-                                  <option>Catering Services</option>
+                                  { categories?.map( cat => <option key={ cat.id } value={ cat.id }>{ cat.name }</option>)}
                                 </select>
                               </div>
                             </div>
