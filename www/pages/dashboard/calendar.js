@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Fragment } from 'react'
-import Layout from "../components/Layout";
+import Layout from "../../components/Layout";
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import * as eventActions from '../actions/events';
-import { eventCalendarData } from '../utils/helpers'
-import AddEvent from '../components/AddEvent';
+import * as eventActions from '../../actions/events';
+import { eventCalendarData } from '../../utils/helpers'
+import AddEvent from '../../components/Events/AddEvent';
 
 import {
   ChevronDownIcon,
