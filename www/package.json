@@ -1,0 +1,41 @@
+{
+  "name": "www",
+  "version": "1.0.0",
+  "description": "Frontend for django app",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next -p 4000",
+    "build": "next build",
+    "start": "next start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@headlessui/react": "^1.7.7",
+    "@heroicons/react": "^2.0.13",
+    "@types/date-fns": "^2.6.0",
+    "date-fns": "^2.29.3",
+    "flowbite": "^1.5.5",
+    "flowbite-datepicker": "^1.2.2",
+    "moment": "^2.29.4",
+    "next": "^13.0.7",
+    "postcss": "^8.4.20",
+    "react": "^18",
+    "react-day-picker": "^8.4.1",
+    "react-dom": "^18",
+    "react-loader-spinner": "^5.3.4",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.0",
+    "redux-thunk": "^2.4.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.3",
+    "@types/node": "^14.0.23",
+    "@types/react": "^18.0.1",
+    "autoprefixer": "^10.4.13",
+    "redux-devtools-extension": "^2.13.9",
+    "tailwindcss": "^3.2.4",
+    "typescript": "^3.9.7"
+  }
+}

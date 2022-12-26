@@ -1,0 +1,4 @@
+POST http://localhost:4001/api/event-create HTTP/1.1
+content-type: application/json
+
+{"title":"zxc","description":"zxc","event_date":"2022-12-29","start_time":"09:00 AM","category":0}
