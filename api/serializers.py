@@ -20,8 +20,24 @@ class User(serializers.ModelSerializer):
             "last_login",
         )
 
+class EventCategory(serializers.ModelSerializer):
+    class Meta:
+        model = event_models.EventCategory
+        fields = "__all__"
+
 class Event(serializers.ModelSerializer):
     class Meta:
         model = event_models.Event
-        fields = '__all__'
+        fields = (
+            "id",
+            "title",
+            "description",
+            "status",
+            "category",
+            "event_date",
+            "start_time",
+            "contact",
+            "place"
+
+        )
 

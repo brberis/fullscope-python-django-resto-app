@@ -73,6 +73,35 @@ const createUrl = (urlSection) => API_URL + urlSection;
     }
   };
 
+  export const createEvents = (event) => async dispatch => {
+    const body = JSON.stringify(event);
+    console.log('>>>BODYYY', body);
+
+    try {
+         const res = await fetch(createUrl('/api/event-create'), {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: body
+      });
+    
+      if (res.status === 201) {
+        dispatch({
+          type: CREATE_EVENT_SUCCESS,
+        });
+      } else {
+        dispatch({
+          type: CREATE_EVENT_FAIL,
+        });
+      }
+    } catch (err) {
+      dispatch({
+        type: CREATE_EVENT_FAIL,
+      });
+    }
+  };
 
 
   

@@ -1,6 +1,7 @@
+import moment from 'moment';
+
 // convert events into monthly calendar data view
 export function eventCalendarData(events) {
-  console.log('>>>>>>>>>>', events);
   
   const date = new Date();
 
@@ -66,5 +67,11 @@ export function eventCalendarData(events) {
   
   const days = prevMonthDays.concat(currentDays, nextMonthDays);
   return days
+}
+
+// convert 9:00 PM to 21:00 for django compatibility 
+export function timeTo24hours(time) {
+  const newTime = moment(time, 'hh:mm A');
+  return newTime.format('HH:mm');
 }
 

@@ -2,8 +2,6 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
-from .views import RegisterView, LoadUserView, EventViewSet
-
 from . import views
 
 admin.autodiscover()
@@ -13,10 +11,12 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view()),
     path('api/token/refresh/', TokenRefreshView.as_view()),
     path('api/token/verify/', TokenVerifyView.as_view()),
-    path('api/account/register', RegisterView.as_view()),
-    path('api/account/user', LoadUserView.as_view()),
-    path('api/events', EventViewSet.as_view({'get': 'list'}), name='event-list'),
-    path('events/<int:pk>/', EventViewSet.as_view({'get': 'retrieve'}), name='event-detail'),
+    path('api/account/register', views.RegisterView.as_view()),
+    path('api/account/user', views.LoadUserView.as_view()),
+    path('api/events', views.EventViewSet.as_view({'get': 'list'}), name='event-list'),
+    path('api/event-categories', views.EventCatViewSet.as_view({'get': 'list'}), name='event-list'),
+    path('api/event-create', views.EventCreate.as_view(), name='create_event'),
+    path('api/events/<int:pk>/', views.EventViewSet.as_view({'get': 'retrieve'}), name='event-detail'),
     path("admin/", admin.site.urls),
     path('signpage/', include('app.signpage.urls')),
 ]
