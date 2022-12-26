@@ -1,17 +1,12 @@
 import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { DayPicker } from 'react-day-picker';
-import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import * as eventActions from '../actions/events';
-import 'react-day-picker/dist/style.css';
-import {timeTo24hours} from '../utils/helpers';
+import * as eventActions from '../../actions/events';
 
-export default function AddEvent(props) {
+export default function ViewEvent(props) {
+
   const [open, setOpen] = useState(props.isOpen)
-  const [selected, setSelected] = useState(Date);
   const dispatch = useDispatch();
-  const categories = useSelector(state => state.events.eventCategories);
 
   // define a callback function that accepts a variable as an argument
   const handleClose = (result) => {
@@ -22,27 +17,8 @@ export default function AddEvent(props) {
   }
 
   useEffect( () => {
-    dispatch(eventActions.loadEventCategories());
+    dispatch(eventActions.loadEvent());
   }, [dispatch]);
-
-  const formHandler = async (e) => {
-    e.preventDefault()
-    const newEvent = {
-                    title: e.target.title.value,
-                    description: e.target.description.value,
-                    event_date: selected.toISOString().split('T')[0],
-                    start_time: timeTo24hours(`${e.target.hour.value}:${e.target.minutes.value} ${e.target.halves.value}`),
-                    // end_time: '12:00 AM',
-                    // category: e.target.category.value,
-                    category: e.target.category.value
-                    };
-
-    await dispatch(eventActions.createEvents(newEvent));
-     
-
-    handleClose(newEvent)
-  }
-
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -90,38 +66,6 @@ export default function AddEvent(props) {
                             </div>
                             <div className="sm:col-span-6">
                               <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-                                Time
-                              </label>
-                              <div className="inline-flex text-lg border rounded-md p-1">
-                                <select name="hour" id="hour" defaultValue="09" className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                  <option value="01">01</option>
-                                  <option value="02">02</option>
-                                  <option value="03">03</option>
-                                  <option value="04">04</option>
-                                  <option value="05">05</option>
-                                  <option value="06">06</option>
-                                  <option value="07">07</option>
-                                  <option value="08">08</option>
-                                  <option value="09">09</option>
-                                  <option value="10">10</option>
-                                  <option value="11">11</option>
-                                  <option value="12">12</option>
-                                </select>
-                                <span className="px-2">:</span>
-                                <select name="minutes" id="minutes" className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                  <option value="00">00</option>
-                                  <option value="15">15</option>
-                                  <option value="30">30</option>
-                                  <option value="45">45</option>
-                                </select>
-                                <select name="halves" id="halves" className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                  <option value="AM">AM</option>
-                                  <option value="PM">PM</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div className="sm:col-span-6">
-                              <label htmlFor="title" className="block text-sm font-medium text-gray-700">
                                 Title
                               </label>
                               <div className="mt-1">
@@ -130,23 +74,8 @@ export default function AddEvent(props) {
                                   name="title"
                                   id="title"
                                   autoComplete="given-name"
+                                  required
                                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                />
-                              </div>
-                            </div>
-
-
-                            <div className="sm:col-span-6">
-                              <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-                                Description
-                              </label>
-                              <div className="mt-1">
-                                <textarea
-                                  id="description"
-                                  name="description"
-                                  rows={3}
-                                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                  defaultValue={''}
                                 />
                               </div>
                             </div>
@@ -163,6 +92,84 @@ export default function AddEvent(props) {
                                 >
                                   { categories?.map( cat => <option key={ cat.id } value={ cat.id }>{ cat.name }</option>)}
                                 </select>
+                              </div>
+                            </div>
+                            <div className="sm:col-span-6">
+                              <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+                                Start
+                              </label>
+                              <div className="inline-flex text-lg border rounded-md p-1">
+                                <select name="startHour" onChange={handleChange} id="startHour" defaultValue={9} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                  <option value={1}>01</option>
+                                  <option value={2}>02</option>
+                                  <option value={3}>03</option>
+                                  <option value={4}>04</option>
+                                  <option value={5}>05</option>
+                                  <option value={6}>06</option>
+                                  <option value={7}>07</option>
+                                  <option value={8}>08</option>
+                                  <option value={9}>09</option>
+                                  <option value={10}>10</option>
+                                  <option value={11}>11</option>
+                                  <option value={12}>12</option>
+                                </select>
+                                <span className="px-2">:</span>
+                                <select name="startMinutes" onChange={handleChange} id="startMinutes" className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                  <option value={0}>00</option>
+                                  <option value={15}>15</option>
+                                  <option value={30}>30</option>
+                                  <option value={45}>45</option>
+                                </select>
+                                <select name="startHalves" onChange={handleChange} value={startHalves} id="startHalves" className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                  <option value="AM">AM</option>
+                                  <option value="PM">PM</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div className="sm:col-span-6">
+                              <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+                                End
+                              </label>
+                              <div className="inline-flex text-lg border rounded-md p-1">
+                                <select name="endHour" id="endHour" onChange={handleChange} value={endHour} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                  <option value={1}>01</option>
+                                  <option value={2}>02</option>
+                                  <option value={3}>03</option>
+                                  <option value={4}>04</option>
+                                  <option value={5}>05</option>
+                                  <option value={6}>06</option>
+                                  <option value={7}>07</option>
+                                  <option value={8}>08</option>
+                                  <option value={9}>09</option>
+                                  <option value={10}>10</option>
+                                  <option value={11}>11</option>
+                                  <option value={12}>12</option>
+                                </select>
+                                <span className="px-2">:</span>
+                                <select name="endMinutes" id="endMinutes" onChange={handleChange} value={endMinutes} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                  <option value={0}>00</option>
+                                  <option value={15}>15</option>
+                                  <option value={30}>30</option>
+                                  <option value={45}>45</option>
+                                </select>
+                                <select name="endHalves" id="endHalves" onChange={handleChange}  value={endHalves} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                  <option value="AM">AM</option>
+                                  <option value="PM">PM</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div className="sm:col-span-6">
+                              <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+                                Description
+                              </label>
+                              <div className="mt-1">
+                                <textarea
+                                  id="description"
+                                  name="description"
+                                  rows={3}
+                                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                  defaultValue={''}
+                                />
                               </div>
                             </div>
                           </div>

@@ -28,7 +28,7 @@ class Event(models.Model):
     status = models.CharField(choices=STATUS, default='Open', max_length=50)
     event_date = models.DateField()
     start_time = models.TimeField()
-    end_time = models.TimeField
+    end_time = models.TimeField()
     contact = models.ForeignKey(Person, null=True, on_delete=models.SET_NULL)
     place = models.TextField(null=True)
 

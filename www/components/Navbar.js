@@ -12,11 +12,11 @@ const navigation = [
   { name: 'Ping', href: '/ping', current: false },
 ]
 const authNavigation = [
-  { name: 'Inventory', href: '/inventory', current: false },
-  { name: 'Calendar', href: '/calendar', current: false },
-  { name: 'Recipes', href: '/recipes', current: false },
-  { name: 'Profile', href: '/me', current: false },
-  { name: 'Logout', href: '/logout', current: false },
+  { name: 'Inventory', href: '/dashboard/inventory', current: false },
+  { name: 'Calendar', href: '/dashboard/calendar', current: false },
+  { name: 'Recipes', href: '/dashboard/recipes', current: false },
+  { name: 'Profile', href: '/dashboard/me', current: false },
+  { name: 'Logout', href: '/dashboard/logout', current: false },
 ]
 
 

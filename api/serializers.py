@@ -36,6 +36,7 @@ class Event(serializers.ModelSerializer):
             "category",
             "event_date",
             "start_time",
+            "end_time",
             "contact",
             "place"
 
