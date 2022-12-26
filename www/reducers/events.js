@@ -41,10 +41,9 @@ import {
         return {
           ...state,
         };
+      case CREATE_EVENT_SUCCESS:
         return {
           ...state,
-          isAuthenticated: false,
-          user: null,
         };
       default:
         return state;

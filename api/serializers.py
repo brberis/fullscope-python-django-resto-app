@@ -23,5 +23,16 @@ class User(serializers.ModelSerializer):
 class Event(serializers.ModelSerializer):
     class Meta:
         model = event_models.Event
-        fields = '__all__'
+        fields = (
+            "id",
+            "title",
+            "description",
+            "status",
+            "category",
+            "event_date",
+            "start_time",
+            "contact",
+            "place"
+
+        )
 

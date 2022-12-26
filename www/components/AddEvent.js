@@ -1,13 +1,17 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { CheckIcon } from '@heroicons/react/24/outline'
-import * as startOfDay from "date-fns";
 import { DayPicker } from 'react-day-picker';
+import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+import * as eventActions from '../actions/events';
 import 'react-day-picker/dist/style.css';
+import {timeTo24hours} from '../utils/helpers';
 
 export default function AddEvent(props) {
   const [open, setOpen] = useState(props.isOpen)
   const [selected, setSelected] = useState(Date);
+  const dispatch = useDispatch();
+
   // define a callback function that accepts a variable as an argument
   const handleClose = (result) => {
     // close the dialog
@@ -16,17 +20,23 @@ export default function AddEvent(props) {
     props.onClose(result)
   }
 
-  const formHandler = (e) => {
+  const formHandler = async (e) => {
     e.preventDefault()
     console.log(e.target.description.value);
     const newEvent = {
                     title: e.target.description.value,
                     description: e.target.description.value,
-                    date: selected,
-                    time: `${e.target.hour.value}:${e.target.minutes.value}:00 ${e.target.halves.value}`,
-                    category: e.target.category.value,
+                    event_date: selected.toISOString().split('T')[0],
+                    start_time: timeTo24hours(`${e.target.hour.value}:${e.target.minutes.value} ${e.target.halves.value}`),
+                    // end_time: '12:00 AM',
+                    // category: e.target.category.value,
+                    category: 1
 
                     };
+
+    await dispatch(eventActions.createEvents(newEvent));
+     
+
     handleClose(newEvent)
   }
 

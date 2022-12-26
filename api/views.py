@@ -99,3 +99,24 @@ class LoadUserView(APIView):
 class EventViewSet(viewsets.ModelViewSet):
     queryset = event_models.Event.objects.all()
     serializer_class = serializers.Event
+
+# @api_view(['GET', 'POST'])
+# def event_list(request):
+
+#     if request.method == 'GET':
+#         events = event_models.Event.objects.all()
+#         serializer = serializers.Event(events, many=True)
+#         return Response(serializer.data, content_type="application/json")
+
+#     elif request.method == 'POST':
+#         serializer = serializers.Event(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class EventCreate(generics.CreateAPIView):
+    queryset = event_models.Event.objects.all()
+    serializer_class = serializers.Event
