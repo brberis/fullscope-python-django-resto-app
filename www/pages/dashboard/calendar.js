@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as eventActions from '../../actions/events';
 import { eventCalendarData } from '../../utils/helpers'
 import AddEvent from '../../components/Events/AddEvent';
+import ViewEvent from '../../components/Events/ViewEvent';
 
 import {
   ChevronDownIcon,
@@ -25,8 +26,10 @@ function classNames(...classes) {
 export default function Calendar() {
   const [days, setDays] = useState(eventCalendarData());
   const [selectedDay, setSelectedDay] = useState(null);
-  const [isOpen, setIsOpen] = useState(false)
-  const [eventAdded, SetEventAdded] = useState(null)
+  const [selectedEvent, setSelectedEvent] = useState(null)
+  const [isOpenAddEvent, setIsOpenAddEvent] = useState(false)
+  const [isOpenViewEvent, setIsOpenViewEvent] = useState(false)
+  const [eventAdded, setEventAdded] = useState(null)
 
   // const [events, setEvents] = useState(eventActions.loadEvents());
   const router = useRouter();
@@ -42,15 +45,19 @@ export default function Calendar() {
   }, [events]);
 
   const addEventHandler = () => {
-    setIsOpen(true);
-    console.log('EVENT HANDLER TO TRUE');
+    setIsOpenAddEvent(true);
+  }
+
+  const viewEventHandler = (id) => {
+    setSelectedEvent(id)
+    setIsOpenViewEvent(true);
   }
 
   // define the onClose callback function
   const handleClose = (result) => {
-    setIsOpen(false);
-    SetEventAdded(result);
-
+    setIsOpenAddEvent(false);
+    setIsOpenViewEvent(false);
+    setEventAdded(result);
   }
   
   useEffect( () => {
@@ -318,8 +325,9 @@ export default function Calendar() {
           </div>
           </div>
           <div className="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto">
-            { isOpen ? <AddEvent isOpen={isOpen} onClose={handleClose} /> : null } 
-            
+            { isOpenAddEvent ? <AddEvent isOpen={isOpenAddEvent} onClose={handleClose} /> : null } 
+            { isOpenViewEvent ? <ViewEvent isOpen={isOpenViewEvent} eventId={selectedEvent} onClose={handleClose} /> : null } 
+
             <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
                 {days.map((day) => (
                 <div
@@ -343,7 +351,7 @@ export default function Calendar() {
                     <ol className="mt-2">
                         {day.events.slice(0, 2).map((event) => (
                         <li key={event.id}>
-                            <a href={event.href} className="group flex">
+                            <a onClick={() => viewEventHandler(event.id)} href={event.href} className="group flex">
                             <p className="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">
                                 {event.name}
                             </p>
@@ -407,14 +415,14 @@ export default function Calendar() {
               {selectedDay.events.map((event) => (
               <li key={event.id} className="group flex p-4 pr-6 focus-within:bg-gray-50 hover:bg-gray-50">
                   <div className="flex-auto">
-                  <p className="font-semibold text-gray-900">{event.name}</p>
+                  <p onClick={() => viewEventHandler()} className="font-semibold text-gray-900">{event.name}</p>
                   <time dateTime={event.datetime} className="mt-2 flex items-center text-gray-700">
                       <ClockIcon className="mr-2 h-5 w-5 text-gray-400" aria-hidden="true" />
                       {event.time}
                   </time>
                   </div>
                   <a
-                  href={event.href}
+                  href='#'
                   className="ml-6 flex-none self-center rounded-md border border-gray-300 bg-white py-2 px-3 font-semibold text-gray-700 opacity-0 shadow-sm hover:bg-gray-50 focus:opacity-100 group-hover:opacity-100"
                   >
                   Edit<span className="sr-only">, {event.name}</span>

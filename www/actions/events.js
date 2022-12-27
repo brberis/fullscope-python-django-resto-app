@@ -75,7 +75,7 @@ const createUrl = (urlSection) => API_URL + urlSection;
 
   export const loadEvent = (id) => async dispatch => {
     try {
-        const res = await fetch(createUrl('/api/event/' + id), {
+        const res = await fetch(createUrl('/api/events/' + id), {
         method: 'GET',
         headers: {
           Accept: 'application/json',
