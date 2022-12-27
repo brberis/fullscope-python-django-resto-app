@@ -1,15 +1,18 @@
 import moment from 'moment';
 
-// convert events into monthly calendar data view
-export function eventCalendarData(date, events) {
-  
+// convert date in string format YYYY-MM-DD
+export function convertDate(rawDate) {
+  const dateString = rawDate;
+  const date = new Date(dateString);
+  const formattedDate = date.toISOString().split("T")[0];
+  return formattedDate
+}
 
-  const convertDate = (rawDate) => {
-    const dateString = rawDate;
-    const date = new Date(dateString);
-    const formattedDate = date.toISOString().split("T")[0];
-    return formattedDate
-  }
+// generate days in month view calendar
+// insert events into monthly calendar data view
+export function eventCalendarData(date, events) {
+
+  const today = convertDate(new Date());
   
   const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
   const numDaysFromPrevMonth = firstDayOfMonth.getDay() - 1;
@@ -17,12 +20,18 @@ export function eventCalendarData(date, events) {
   const prevMonthDays = [];
   const prevMonth = new Date(date.getFullYear(), date.getMonth() - 1, 1);
   const numDaysInPrevMonth = new Date(prevMonth.getFullYear(), prevMonth.getMonth() + 1, 0).getDate();
-  
+  let isToday;
+  let isSelected = false;
+
   for (let i = numDaysInPrevMonth - numDaysFromPrevMonth + 1; i <= numDaysInPrevMonth; i++) {
+    
     let newDate = convertDate(new Date(prevMonth.getFullYear(), prevMonth.getMonth(), i));
+    today === newDate ? isToday = true : isToday = false;
     prevMonthDays.push({
       date: newDate,
-      events: []
+      events: [],
+      isSelected,
+      isToday
     });
   }
   
@@ -32,6 +41,7 @@ export function eventCalendarData(date, events) {
   for (let i = 1; i <= numDaysInMonth; i++) {
     let newDate = convertDate(new Date(date.getFullYear(), date.getMonth(), i));
     let calendarEvents = [];
+    today === newDate ? isToday = true : isToday = false;
     // for each day add events if exists 
     for (let j = 0; j < events?.length; j++) {
       if (events[j].event_date === newDate) {
@@ -47,7 +57,9 @@ export function eventCalendarData(date, events) {
     currentDays.push({
       date: newDate,
       isCurrentMonth: true,
-      events: calendarEvents
+      events: calendarEvents,
+      isSelected,
+      isToday
     });
   }
   
@@ -59,9 +71,12 @@ export function eventCalendarData(date, events) {
   const numDaysInNextMonth = new Date(nextMonth.getFullYear(), nextMonth.getMonth() + 1, 0).getDate();
   for (let i = 1; i <= numDaysFromNextMonth; i++) {
     let newDate = convertDate(new Date(nextMonth.getFullYear(), nextMonth.getMonth(), i));
+    today === newDate ? isToday = true : isToday = false;
     nextMonthDays.push({
       date: newDate,
-      events: []
+      events: [],
+      isSelected,
+      isToday
     });
   }
   
