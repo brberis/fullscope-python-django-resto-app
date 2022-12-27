@@ -33,10 +33,8 @@ export default function Calendar() {
   const router = useRouter();
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const user = useSelector(state => state.auth.user);
-  
   const events = useSelector(state => state.events);
   const dispatch = useDispatch();
-
 
   useEffect( () => {
     setDays(eventCalendarData(currentMonthDate, events.events));
@@ -52,17 +50,18 @@ export default function Calendar() {
     setIsOpenViewEvent(true);
   }
 
-
   const handleOtherMonth = (thisMonth) => {
     // Create a new date object by cloning the currentMonthDate object
     const newDate = new Date(currentMonthDate);
     // Add one month to the new date object
     newDate.setMonth(newDate.getMonth() + thisMonth);
     // Update the currentMonthDate in state with the new date object
+    if (!thisMonth) {
+      setCurrentMonthDate(new Date());
+      return;
+    }
     setCurrentMonthDate(newDate);  
-    
   }
-
   
   // define the onClose callback function
   const handleClose = (result) => {
@@ -80,7 +79,6 @@ export default function Calendar() {
     dispatch(eventActions.loadEvents());
   }, [dispatch, eventAdded]);
 
-
   const loading = useSelector(state => state.auth.loading);
 
   if (typeof window !== 'undefined' && !loading && !isAuthenticated) {
@@ -88,7 +86,6 @@ export default function Calendar() {
   }
 
   
-
   return (
     <Layout>
       <div className="lg:flex lg:h-full lg:flex-col" >
@@ -107,6 +104,7 @@ export default function Calendar() {
               <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
               </button>
               <button
+              onClick={() => handleOtherMonth()}
               type="button"
               className="hidden border-t border-b border-gray-300 bg-white px-3.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 focus:relative md:block"
               >
@@ -123,82 +121,6 @@ export default function Calendar() {
               </button>
           </div>
           <div className="hidden md:ml-4 md:flex md:items-center">
-              <Menu as="div" className="relative">
-              <Menu.Button
-                  type="button"
-                  className="flex items-center rounded-md border border-gray-300 bg-white py-2 pl-3 pr-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
-              >
-                  Month view
-                  <ChevronDownIcon className="ml-2 h-5 w-5 text-gray-400" aria-hidden="true" />
-              </Menu.Button>
-
-              <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-              >
-                  <Menu.Items className="absolute right-0 z-10 mt-3 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  <div className="py-1">
-                      <Menu.Item>
-                      {({ active }) => (
-                          <a
-                          href="#"
-                          className={classNames(
-                              active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                              'block px-4 py-2 text-sm'
-                          )}
-                          >
-                          Day view
-                          </a>
-                      )}
-                      </Menu.Item>
-                      <Menu.Item>
-                      {({ active }) => (
-                          <a
-                          href="#"
-                          className={classNames(
-                              active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                              'block px-4 py-2 text-sm'
-                          )}
-                          >
-                          Week view
-                          </a>
-                      )}
-                      </Menu.Item>
-                      <Menu.Item>
-                      {({ active }) => (
-                          <a
-                          href="#"
-                          className={classNames(
-                              active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                              'block px-4 py-2 text-sm'
-                          )}
-                          >
-                          Month view
-                          </a>
-                      )}
-                      </Menu.Item>
-                      <Menu.Item>
-                      {({ active }) => (
-                          <a
-                          href="#"
-                          className={classNames(
-                              active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                              'block px-4 py-2 text-sm'
-                          )}
-                          >
-                          Year view
-                          </a>
-                      )}
-                      </Menu.Item>
-                  </div>
-                  </Menu.Items>
-              </Transition>
-              </Menu>
               <div className="ml-6 h-6 w-px bg-gray-300" />
               <button
               type="button"
@@ -229,6 +151,7 @@ export default function Calendar() {
                       {({ active }) => (
                       <a
                           href="#"
+                          onClick={() => addEventHandler()}
                           className={classNames(
                           active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                           'block px-4 py-2 text-sm'
@@ -244,66 +167,13 @@ export default function Calendar() {
                       {({ active }) => (
                       <a
                           href="#"
+                          onClick={() => handleOtherMonth()}
                           className={classNames(
                           active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                           'block px-4 py-2 text-sm'
                           )}
                       >
                           Go to today
-                      </a>
-                      )}
-                  </Menu.Item>
-                  </div>
-                  <div className="py-1">
-                  <Menu.Item>
-                      {({ active }) => (
-                      <a
-                          href="#"
-                          className={classNames(
-                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                          'block px-4 py-2 text-sm'
-                          )}
-                      >
-                          Day view
-                      </a>
-                      )}
-                  </Menu.Item>
-                  <Menu.Item>
-                      {({ active }) => (
-                      <a
-                          href="#"
-                          className={classNames(
-                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                          'block px-4 py-2 text-sm'
-                          )}
-                      >
-                          Week view
-                      </a>
-                      )}
-                  </Menu.Item>
-                  <Menu.Item>
-                      {({ active }) => (
-                      <a
-                          href="#"
-                          className={classNames(
-                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                          'block px-4 py-2 text-sm'
-                          )}
-                      >
-                          Month view
-                      </a>
-                      )}
-                  </Menu.Item>
-                  <Menu.Item>
-                      {({ active }) => (
-                      <a
-                          href="#"
-                          className={classNames(
-                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                          'block px-4 py-2 text-sm'
-                          )}
-                      >
-                          Year view
                       </a>
                       )}
                   </Menu.Item>
@@ -338,7 +208,7 @@ export default function Calendar() {
           </div>
           </div>
           <div className="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto">
-            { isOpenAddEvent ? <AddEvent isOpen={isOpenAddEvent} onClose={handleClose} /> : null } 
+            { isOpenAddEvent ? <AddEvent isOpen={isOpenAddEvent} currentDate={currentMonthDate} onClose={handleClose} /> : null } 
             { isOpenViewEvent ? <ViewEvent isOpen={isOpenViewEvent} eventId={selectedEvent} onClose={handleClose} /> : null } 
 
             <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">

@@ -10,7 +10,7 @@ import {timeTo24hours} from '../../utils/helpers';
 export default function AddEvent(props) {
   const today = new Date();
   const [open, setOpen] = useState(props.isOpen)
-  const [selected, setSelected] = useState(today);
+  const [selected, setSelected] = useState(props.currentDate);
   const [endHour, setEndHour] = useState(10);
   // const [endMinutesDef, setEndMinutes] = useState(0);
   const [endMinutes, setEndMinutes] = useState(0);
@@ -128,6 +128,7 @@ export default function AddEvent(props) {
                               mode="single"
                               selected={selected}
                               onSelect={setSelected}
+                              defaultMonth={props.currentDate}
                               />                       
                             </div>
                             <div className="sm:col-span-6">
