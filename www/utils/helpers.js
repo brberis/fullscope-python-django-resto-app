@@ -1,9 +1,8 @@
 import moment from 'moment';
 
 // convert events into monthly calendar data view
-export function eventCalendarData(events) {
+export function eventCalendarData(date, events) {
   
-  const date = new Date();
 
   const convertDate = (rawDate) => {
     const dateString = rawDate;
@@ -33,6 +32,7 @@ export function eventCalendarData(events) {
   for (let i = 1; i <= numDaysInMonth; i++) {
     let newDate = convertDate(new Date(date.getFullYear(), date.getMonth(), i));
     let calendarEvents = [];
+    // for each day add events if exists 
     for (let j = 0; j < events?.length; j++) {
       if (events[j].event_date === newDate) {
         calendarEvents.push({
@@ -73,5 +73,12 @@ export function eventCalendarData(events) {
 export function timeTo24hours(time) {
   const newTime = moment(time, 'hh:mm A');
   return newTime.format('HH:mm');
+}
+
+// get month and year format January, 2022
+export function dateToMonthYear(date) {
+  const momentDate = moment(date); 
+  const formattedDate = momentDate.format('MMMM YYYY')
+  return formattedDate;
 }
 

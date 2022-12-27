@@ -2,12 +2,14 @@ import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { useDispatch, useSelector } from 'react-redux';
 import * as eventActions from '../../actions/events';
+import { PaperClipIcon } from '@heroicons/react/20/solid'
 
 export default function ViewEvent(props) {
 
   const [open, setOpen] = useState(props.isOpen)
   const dispatch = useDispatch();
-
+  const event = useSelector(state => state.events.event);
+  
   // define a callback function that accepts a variable as an argument
   const handleClose = (result) => {
     // close the dialog
@@ -17,7 +19,7 @@ export default function ViewEvent(props) {
   }
 
   useEffect( () => {
-    dispatch(eventActions.loadEvent());
+    dispatch(eventActions.loadEvent(props.eventId));
   }, [dispatch]);
 
   return (
@@ -48,150 +50,47 @@ export default function ViewEvent(props) {
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
                 <div>
-                  <Dialog.Title as="h3" className="text-lg text-center font-medium leading-6 text-gray-900">
-                    Add Event
-                  </Dialog.Title>
-                  <div className="mt-3 text-left sm:mt-5">
-                    <div className="mt-2">
-                    <form onSubmit={formHandler} className="space-y-8 divide-y divide-gray-200">
-                      <div className="space-y-8 divide-y divide-gray-200">
-                        <div>
-                          <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-                            <div>
-                            <DayPicker
-                              mode="single"
-                              selected={selected}
-                              onSelect={setSelected}
-                              />                       
-                            </div>
-                            <div className="sm:col-span-6">
-                              <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-                                Title
-                              </label>
-                              <div className="mt-1">
-                                <input
-                                  type="text"
-                                  name="title"
-                                  id="title"
-                                  autoComplete="given-name"
-                                  required
-                                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                />
-                              </div>
-                            </div>
-                            <div className="sm:col-span-3">
-                              <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-                                Category
-                              </label>
-                              <div className="mt-1">
-                                <select
-                                  id="category"
-                                  name="category"
-                                  autoComplete="category-name"
-                                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                >
-                                  { categories?.map( cat => <option key={ cat.id } value={ cat.id }>{ cat.name }</option>)}
-                                </select>
-                              </div>
-                            </div>
-                            <div className="sm:col-span-6">
-                              <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-                                Start
-                              </label>
-                              <div className="inline-flex text-lg border rounded-md p-1">
-                                <select name="startHour" onChange={handleChange} id="startHour" defaultValue={9} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                  <option value={1}>01</option>
-                                  <option value={2}>02</option>
-                                  <option value={3}>03</option>
-                                  <option value={4}>04</option>
-                                  <option value={5}>05</option>
-                                  <option value={6}>06</option>
-                                  <option value={7}>07</option>
-                                  <option value={8}>08</option>
-                                  <option value={9}>09</option>
-                                  <option value={10}>10</option>
-                                  <option value={11}>11</option>
-                                  <option value={12}>12</option>
-                                </select>
-                                <span className="px-2">:</span>
-                                <select name="startMinutes" onChange={handleChange} id="startMinutes" className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                  <option value={0}>00</option>
-                                  <option value={15}>15</option>
-                                  <option value={30}>30</option>
-                                  <option value={45}>45</option>
-                                </select>
-                                <select name="startHalves" onChange={handleChange} value={startHalves} id="startHalves" className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                  <option value="AM">AM</option>
-                                  <option value="PM">PM</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div className="sm:col-span-6">
-                              <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-                                End
-                              </label>
-                              <div className="inline-flex text-lg border rounded-md p-1">
-                                <select name="endHour" id="endHour" onChange={handleChange} value={endHour} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                  <option value={1}>01</option>
-                                  <option value={2}>02</option>
-                                  <option value={3}>03</option>
-                                  <option value={4}>04</option>
-                                  <option value={5}>05</option>
-                                  <option value={6}>06</option>
-                                  <option value={7}>07</option>
-                                  <option value={8}>08</option>
-                                  <option value={9}>09</option>
-                                  <option value={10}>10</option>
-                                  <option value={11}>11</option>
-                                  <option value={12}>12</option>
-                                </select>
-                                <span className="px-2">:</span>
-                                <select name="endMinutes" id="endMinutes" onChange={handleChange} value={endMinutes} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                  <option value={0}>00</option>
-                                  <option value={15}>15</option>
-                                  <option value={30}>30</option>
-                                  <option value={45}>45</option>
-                                </select>
-                                <select name="endHalves" id="endHalves" onChange={handleChange}  value={endHalves} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                  <option value="AM">AM</option>
-                                  <option value="PM">PM</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div className="sm:col-span-6">
-                              <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-                                Description
-                              </label>
-                              <div className="mt-1">
-                                <textarea
-                                  id="description"
-                                  name="description"
-                                  rows={3}
-                                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                  defaultValue={''}
-                                />
-                              </div>
-                            </div>
-                          </div>
+                  <div className="overflow-hidden bg-white shadow sm:rounded-lg">
+                    <div className="px-4 py-5 sm:px-6">
+                      <h3 className="text-lg font-medium leading-6 text-gray-900">Event Information</h3>
+                      <p className="mt-1 max-w-2xl text-sm text-gray-500">{event?.title}</p>
+                    </div>
+                    <div className="border-t border-gray-200">
+                      <dl>
+                        <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                          <dt className="text-sm font-medium text-gray-500">Date</dt>
+                          <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{event?.event_date}</dd>
                         </div>
-                      </div>
-                      <div className="pt-5">
-                        <div className="flex justify-end">
-                          <button
-                            type="button"
-                            className="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                          >
-                            Cancel
-                          </button>
-                          <button
-                            type="submit"
-                            className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                          >
-                            Save
-                          </button>
+                        <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                          <dt className="text-sm font-medium text-gray-500">Category</dt>
+                          <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{event?.category}</dd>
                         </div>
-                      </div>
-                    </form>
+                        <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                          <dt className="text-sm font-medium text-gray-500">Start Time</dt>
+                          <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{event?.start_time}</dd>
+                        </div>
+                        <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                          <dt className="text-sm font-medium text-gray-500">End Time</dt>
+                          <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{event?.end_time}</dd>
+                        </div>
+                        <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                          <dt className="text-sm font-medium text-gray-500">Details</dt>
+                          <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            {event?.description}
+                          </dd>
+                        </div>
+                      </dl>
+                    </div>
+                  </div>
+                  <div className="pt-5">
+                    <div className="flex justify-end">
+                      <button
+                        onClick={() => handleClose()}
+                        type="button"
+                        className="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      >
+                        Close
+                      </button>
                     </div>
                   </div>
                 </div>

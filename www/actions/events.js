@@ -73,12 +73,39 @@ const createUrl = (urlSection) => API_URL + urlSection;
     }
   };
 
+  export const loadEvent = (id) => async dispatch => {
+    try {
+        const res = await fetch(createUrl('/api/events/' + id), {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+        },
+      });
+  
+      const data = await res.json();
+  
+      if (res.status === 200) {
+        dispatch({
+          type: LOAD_EVENT_SUCCESS,
+          payload: data,
+        });
+      } else {
+        dispatch({
+          type: LOAD_EVENT_FAIL,
+        });
+      }
+    } catch (err) {
+      dispatch({
+        type: LOAD_EVENT_FAIL,
+      });
+    }
+  };
+
   export const createEvents = (event) => async dispatch => {
     const body = JSON.stringify(event);
-    console.log('>>>BODYYY', body);
 
     try {
-         const res = await fetch(createUrl('/api/event-create'), {
+         const res = await fetch(createUrl('/api/events'), {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -102,6 +129,8 @@ const createUrl = (urlSection) => API_URL + urlSection;
       });
     }
   };
+
+  
 
 
   

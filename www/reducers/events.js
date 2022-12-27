@@ -41,6 +41,15 @@ import {
         return {
           ...state,
         };
+      case LOAD_EVENT_SUCCESS:
+        return {
+          ...state,
+          event: payload,
+        };
+      case LOAD_EVENT_FAIL:
+        return {
+          ...state,
+        };
       case CREATE_EVENT_SUCCESS:
         return {
           ...state,

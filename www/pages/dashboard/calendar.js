@@ -4,8 +4,9 @@ import Layout from "../../components/Layout";
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import * as eventActions from '../../actions/events';
-import { eventCalendarData } from '../../utils/helpers'
+import { eventCalendarData, dateToMonthYear } from '../../utils/helpers'
 import AddEvent from '../../components/Events/AddEvent';
+import ViewEvent from '../../components/Events/ViewEvent';
 
 import {
   ChevronDownIcon,
@@ -16,19 +17,19 @@ import {
 } from '@heroicons/react/20/solid'
 import { Menu, Transition } from '@headlessui/react'
 
-
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function Calendar() {
-  const [days, setDays] = useState(eventCalendarData());
+  const [currentMonthDate, setCurrentMonthDate] = useState(new Date())
+  const [days, setDays] = useState(eventCalendarData(currentMonthDate, null));
   const [selectedDay, setSelectedDay] = useState(null);
-  const [isOpen, setIsOpen] = useState(false)
-  const [eventAdded, SetEventAdded] = useState(null)
-
-  // const [events, setEvents] = useState(eventActions.loadEvents());
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [isOpenAddEvent, setIsOpenAddEvent] = useState(false);
+  const [isOpenViewEvent, setIsOpenViewEvent] = useState(false);
+  const [eventAdded, setEventAdded] = useState(null);
+  const [monthYear, setMonthYear] = useState();
   const router = useRouter();
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const user = useSelector(state => state.auth.user);
@@ -38,19 +39,36 @@ export default function Calendar() {
 
 
   useEffect( () => {
-    setDays(eventCalendarData(events.events));
-  }, [events]);
+    setDays(eventCalendarData(currentMonthDate, events.events));
+    setMonthYear(dateToMonthYear(currentMonthDate));
+  }, [events, currentMonthDate]);
 
   const addEventHandler = () => {
-    setIsOpen(true);
-    console.log('EVENT HANDLER TO TRUE');
+    setIsOpenAddEvent(true);
   }
 
+  const viewEventHandler = (id) => {
+    setSelectedEvent(id)
+    setIsOpenViewEvent(true);
+  }
+
+
+  const handleOtherMonth = (thisMonth) => {
+    // Create a new date object by cloning the currentMonthDate object
+    const newDate = new Date(currentMonthDate);
+    // Add one month to the new date object
+    newDate.setMonth(newDate.getMonth() + thisMonth);
+    // Update the currentMonthDate in state with the new date object
+    setCurrentMonthDate(newDate);  
+    
+  }
+
+  
   // define the onClose callback function
   const handleClose = (result) => {
-    setIsOpen(false);
-    SetEventAdded(result);
-
+    setIsOpenAddEvent(false);
+    setIsOpenViewEvent(false);
+    setEventAdded(result);
   }
   
   useEffect( () => {
@@ -76,11 +94,12 @@ export default function Calendar() {
       <div className="lg:flex lg:h-full lg:flex-col" >
       <header className="flex items-center justify-between border-b border-gray-200 py-4 px-6 lg:flex-none">
           <h1 className="text-lg font-semibold text-gray-900">
-          <time dateTime="2022-01">January 2022</time>
+          <time dateTime="2022-01">{monthYear}</time>
           </h1>
           <div className="flex items-center">
           <div className="flex items-center rounded-md shadow-sm md:items-stretch">
               <button
+              onClick={() => handleOtherMonth(-1)}
               type="button"
               className="flex items-center justify-center rounded-l-md border border-r-0 border-gray-300 bg-white py-2 pl-3 pr-4 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50"
               >
@@ -95,6 +114,7 @@ export default function Calendar() {
               </button>
               <span className="relative -mx-px h-5 w-px bg-gray-300 md:hidden" />
               <button
+              onClick={() => handleOtherMonth(1)}
               type="button"
               className="flex items-center justify-center rounded-r-md border border-l-0 border-gray-300 bg-white py-2 pl-4 pr-3 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50"
               >
@@ -318,8 +338,9 @@ export default function Calendar() {
           </div>
           </div>
           <div className="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto">
-            { isOpen ? <AddEvent isOpen={isOpen} onClose={handleClose} /> : null } 
-            
+            { isOpenAddEvent ? <AddEvent isOpen={isOpenAddEvent} onClose={handleClose} /> : null } 
+            { isOpenViewEvent ? <ViewEvent isOpen={isOpenViewEvent} eventId={selectedEvent} onClose={handleClose} /> : null } 
+
             <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
                 {days.map((day) => (
                 <div
@@ -343,7 +364,7 @@ export default function Calendar() {
                     <ol className="mt-2">
                         {day.events.slice(0, 2).map((event) => (
                         <li key={event.id}>
-                            <a href={event.href} className="group flex">
+                            <a onClick={() => viewEventHandler(event.id)} href={event.href} className="group flex">
                             <p className="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">
                                 {event.name}
                             </p>
@@ -407,14 +428,14 @@ export default function Calendar() {
               {selectedDay.events.map((event) => (
               <li key={event.id} className="group flex p-4 pr-6 focus-within:bg-gray-50 hover:bg-gray-50">
                   <div className="flex-auto">
-                  <p className="font-semibold text-gray-900">{event.name}</p>
+                  <p onClick={() => viewEventHandler()} className="font-semibold text-gray-900">{event.name}</p>
                   <time dateTime={event.datetime} className="mt-2 flex items-center text-gray-700">
                       <ClockIcon className="mr-2 h-5 w-5 text-gray-400" aria-hidden="true" />
                       {event.time}
                   </time>
                   </div>
                   <a
-                  href={event.href}
+                  href='#'
                   className="ml-6 flex-none self-center rounded-md border border-gray-300 bg-white py-2 px-3 font-semibold text-gray-700 opacity-0 shadow-sm hover:bg-gray-50 focus:opacity-100 group-hover:opacity-100"
                   >
                   Edit<span className="sr-only">, {event.name}</span>

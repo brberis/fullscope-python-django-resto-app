@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import permissions, status
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view
+
 
 from django.shortcuts import render
 from django.contrib.auth.models import User
@@ -100,27 +102,48 @@ class EventCatViewSet(viewsets.ModelViewSet):
     queryset = event_models.EventCategory.objects.all()
     serializer_class = serializers.EventCategory
 
-class EventViewSet(viewsets.ModelViewSet):
-    queryset = event_models.Event.objects.all()
-    serializer_class = serializers.Event
 
-# @api_view(['GET', 'POST'])
-# def event_list(request):
+@api_view(['GET', 'POST'])
+def event_list(request):
+    """
+    Retrieve and post elements.
+    """
+    if request.method == 'GET':
+        events = event_models.Event.objects.all()
+        serializer = serializers.Event(events, many=True)
+        return Response(serializer.data, content_type="application/json")
 
-#     if request.method == 'GET':
-#         events = event_models.Event.objects.all()
-#         serializer = serializers.Event(events, many=True)
-#         return Response(serializer.data, content_type="application/json")
-
-#     elif request.method == 'POST':
-#         serializer = serializers.Event(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    elif request.method == 'POST':
+        serializer = serializers.Event(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class EventCreate(generics.CreateAPIView):
-    queryset = event_models.Event.objects.all()
-    serializer_class = serializers.Event
+@api_view(['GET', 'PUT', 'DELETE'])
+def event_detail(request, pk):
+    """
+    Retrieve, update or delete an element.
+    """
+    try:
+        event = event_models.Event.objects.get(pk=pk)
+    except event_models.Event.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = serializers.Event(event)
+   
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = serializers.Event(event, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        event.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
