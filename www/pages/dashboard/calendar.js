@@ -4,7 +4,7 @@ import Layout from "../../components/Layout";
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import * as eventActions from '../../actions/events';
-import { eventCalendarData, dateToMonthYear } from '../../utils/helpers'
+import { eventCalendarData, dateToMonthYear, convertDate } from '../../utils/helpers'
 import AddEvent from '../../components/Events/AddEvent';
 import ViewEvent from '../../components/Events/ViewEvent';
 
@@ -25,6 +25,7 @@ export default function Calendar() {
   const [currentMonthDate, setCurrentMonthDate] = useState(new Date())
   const [days, setDays] = useState(eventCalendarData(currentMonthDate, null));
   const [selectedDay, setSelectedDay] = useState(null);
+  const [lastSelectedDay, setLastSelectedDay] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isOpenAddEvent, setIsOpenAddEvent] = useState(false);
   const [isOpenViewEvent, setIsOpenViewEvent] = useState(false);
@@ -50,6 +51,7 @@ export default function Calendar() {
     setIsOpenViewEvent(true);
   }
 
+  // handle nest and previous month buttons
   const handleOtherMonth = (thisMonth) => {
     // Create a new date object by cloning the currentMonthDate object
     const newDate = new Date(currentMonthDate);
@@ -70,14 +72,29 @@ export default function Calendar() {
     setEventAdded(result);
   }
   
-  useEffect( () => {
-    setSelectedDay(days.find((day) => day.isSelected));
-  }, [days]);
+  // useEffect( () => {
+  //   setSelectedDay(days.find((day) => day.isSelected));
+  // }, [days]);
 
   // render events in calendar
   useEffect( () => {
     dispatch(eventActions.loadEvents());
   }, [dispatch, eventAdded]);
+
+  // when user click a day in the calendar 
+  const handlerSelectedDay = (date) => {
+    for (let i = 0; i < days.length; i++) {
+      // unselect last selected day
+      lastSelectedDay ? days[lastSelectedDay].isSelected = false : null;
+      if (days[i].date === convertDate(date)) {
+        days[i].isSelected = true;
+        setSelectedDay(days[i]);
+        setLastSelectedDay(i);
+        break;
+      }
+    }
+    setDays(days);
+  }
 
   const loading = useSelector(state => state.auth.loading);
 
@@ -214,6 +231,7 @@ export default function Calendar() {
             <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
                 {days.map((day) => (
                 <div
+                    // onClick={() => handlerSelectedDay(day.date)}
                     key={day.date}
                     className={classNames(
                     day.isCurrentMonth ? 'bg-white' : 'bg-gray-50 text-gray-500',
@@ -225,6 +243,8 @@ export default function Calendar() {
                     className={
                         day.isToday
                         ? 'flex h-6 w-6 items-center justify-center rounded-full bg-indigo-600 font-semibold text-white'
+                        : day.isSelected
+                        ? 'flex h-6 w-6 items-center justify-center rounded-full bg-black font-semibold text-white'
                         : undefined
                     }
                     >
@@ -257,6 +277,7 @@ export default function Calendar() {
                 {days.map((day) => (
                 <button
                     key={day.date}
+                    onClick={() => handlerSelectedDay(day.date)}
                     type="button"
                     className={classNames(
                     day.isCurrentMonth ? 'bg-white' : 'bg-gray-50',
@@ -292,13 +313,14 @@ export default function Calendar() {
             </div>
           </div>
       </div>
+      {/* {selectedDay?.events.length > 0 && ( */}
       {selectedDay?.events.length > 0 && (
-          <div className="py-10 px-4 sm:px-6 lg:hidden">
+      <div className="py-10 px-4 sm:px-6 lg:hidden">
           <ol className="divide-y divide-gray-100 overflow-hidden rounded-lg bg-white text-sm shadow ring-1 ring-black ring-opacity-5">
-              {selectedDay.events.map((event) => (
-              <li key={event.id} className="group flex p-4 pr-6 focus-within:bg-gray-50 hover:bg-gray-50">
+              {selectedDay?.events.map((event) => (
+              <li key={event.id} onClick={() => viewEventHandler()}  className="group flex p-4 pr-6 focus-within:bg-gray-50 hover:bg-gray-50">
                   <div className="flex-auto">
-                  <p onClick={() => viewEventHandler()} className="font-semibold text-gray-900">{event.name}</p>
+                  <p className="font-semibold text-gray-900">{event.name}</p>
                   <time dateTime={event.datetime} className="mt-2 flex items-center text-gray-700">
                       <ClockIcon className="mr-2 h-5 w-5 text-gray-400" aria-hidden="true" />
                       {event.time}

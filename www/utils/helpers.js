@@ -1,15 +1,16 @@
 import moment from 'moment';
 
+// convert date in string format YYYY-MM-DD
+export function convertDate(rawDate) {
+  const dateString = rawDate;
+  const date = new Date(dateString);
+  const formattedDate = date.toISOString().split("T")[0];
+  return formattedDate
+}
+
 // generate days in month view calendar
 // insert events into monthly calendar data view
 export function eventCalendarData(date, events) {
-
-  const convertDate = (rawDate) => {
-    const dateString = rawDate;
-    const date = new Date(dateString);
-    const formattedDate = date.toISOString().split("T")[0];
-    return formattedDate
-  }
 
   const today = convertDate(new Date());
   
@@ -20,6 +21,7 @@ export function eventCalendarData(date, events) {
   const prevMonth = new Date(date.getFullYear(), date.getMonth() - 1, 1);
   const numDaysInPrevMonth = new Date(prevMonth.getFullYear(), prevMonth.getMonth() + 1, 0).getDate();
   let isToday;
+  let isSelected = false;
 
   for (let i = numDaysInPrevMonth - numDaysFromPrevMonth + 1; i <= numDaysInPrevMonth; i++) {
     
@@ -28,6 +30,7 @@ export function eventCalendarData(date, events) {
     prevMonthDays.push({
       date: newDate,
       events: [],
+      isSelected,
       isToday
     });
   }
@@ -55,6 +58,7 @@ export function eventCalendarData(date, events) {
       date: newDate,
       isCurrentMonth: true,
       events: calendarEvents,
+      isSelected,
       isToday
     });
   }
@@ -71,6 +75,7 @@ export function eventCalendarData(date, events) {
     nextMonthDays.push({
       date: newDate,
       events: [],
+      isSelected,
       isToday
     });
   }

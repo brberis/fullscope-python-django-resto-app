@@ -33,7 +33,6 @@ export default function AddEvent(props) {
 
   
   const handleChange = (event) => {
-    console.log(event.target.value);
     if (event.target.name === 'startHour') {
       if (parseInt(event.target.value) === 12) {
         setEndHour(1);
