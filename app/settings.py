@@ -1,6 +1,9 @@
 from datetime import timedelta
 import os
 import environ
+from django.core.management.utils import get_random_secret_key
+import sys
+import dj_database_url
 
 DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -18,13 +21,16 @@ if not IGNORE_DOT_ENV_FILE:
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
+
+DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DEBUG")
+DEBUG = os.getenv("DEBUG", "False") == "True"
 ON_SERVER = env("ON_SERVER", default=True)
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+
 CORS_ALLOW_CREDENTIALS = True
 if ON_SERVER:
     CORS_ORIGIN_REGEX_WHITELIST = env.list(
@@ -105,9 +111,19 @@ WSGI_APPLICATION = "app.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    "default": env.db(),
-}
+if DEVELOPMENT_MODE is True:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "db.db"),
+        }
+    }
+elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
+    if os.getenv("DATABASE_URL", None) is None:
+        raise Exception("DATABASE_URL environment variable not defined")
+    DATABASES = {
+        "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
