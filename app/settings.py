@@ -29,7 +29,7 @@ DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 DEBUG = os.getenv("DEBUG", "False") == "True"
 ON_SERVER = env("ON_SERVER", default=True)
 
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+ALLOWED_HOSTS = os.getenv("xxxx", "127.0.0.1,localhost").split(",")
 
 CORS_ALLOW_CREDENTIALS = True
 if ON_SERVER:
