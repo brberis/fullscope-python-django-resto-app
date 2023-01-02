@@ -19,7 +19,7 @@ const createUrl = (urlSection) => API_URL + urlSection;
 
   export const loadEventCategories = () => async dispatch => {
     try {
-      const res = await fetch(createUrl('/api/event-categories'), {
+      const res = await fetch(createUrl('/api/v1/event-categories'), {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -75,7 +75,7 @@ const createUrl = (urlSection) => API_URL + urlSection;
 
   export const loadEvent = (id) => async dispatch => {
     try {
-        const res = await fetch(createUrl('/api/events/' + id), {
+        const res = await fetch(createUrl('/api/v1/events/' + id), {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -105,7 +105,7 @@ const createUrl = (urlSection) => API_URL + urlSection;
     const body = JSON.stringify(event);
 
     try {
-         const res = await fetch(createUrl('/api/events'), {
+         const res = await fetch(createUrl('/api/v1/events'), {
         method: 'POST',
         headers: {
           Accept: 'application/json',
