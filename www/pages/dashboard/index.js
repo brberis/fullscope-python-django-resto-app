@@ -1,4 +1,4 @@
-import Layout from "../components/Layout";
+import Layout from "../../components/Layout";
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 
