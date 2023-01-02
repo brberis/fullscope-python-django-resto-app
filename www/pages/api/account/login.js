@@ -12,7 +12,7 @@ const login = async (req, res) => {
 
     try {
       // * This response is from Django
-      const apiRes = await fetch(`${API_URL}/api/token/`, {
+      const apiRes = await fetch(`${API_URL}/api/v1/token/`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
