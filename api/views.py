@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 
 from . import serializers
 
-from app.events import models as event_models
+from events import models as event_models
 
 
 

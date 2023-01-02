@@ -17,7 +17,7 @@ urlpatterns = [
     path('api/events/<int:pk>/', views.event_detail),
     path('api/event-categories', views.EventCatViewSet.as_view({'get': 'list'}), name='event-list'),
     path("admin/", admin.site.urls),
-    path('signpage/', include('app.signpage.urls')),
+    path('signpage/', include('signpage.urls')),
 ]
 
 urlpatterns += [

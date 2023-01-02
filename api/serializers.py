@@ -5,7 +5,7 @@ from rest_framework_simplejwt.settings import api_settings as jwt_settings
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from . import models
-from app.events import models as event_models
+from events import models as event_models
 
 class User(serializers.ModelSerializer):
     class Meta:
