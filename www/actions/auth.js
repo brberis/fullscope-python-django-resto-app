@@ -15,10 +15,12 @@ import {
   REFRESH_SUCCESS,
   REFRESH_FAIL,
 } from './types';
+const NEXT_API_URL = process.env.NEXT_PUBLIC_API_HOST;
+
 
 export const load_user = () => async dispatch => {
   try {
-    const res = await fetch('/api/account/user', {
+    const res = await fetch(`${NEXT_API_URL}/api/account/user`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -46,7 +48,7 @@ export const load_user = () => async dispatch => {
 
 export const check_auth_status = () => async dispatch => {
   try {
-    const res = await fetch('/api/account/verify', {
+    const res = await fetch(`${NEXT_API_URL}/api/account/verify`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -74,7 +76,7 @@ export const check_auth_status = () => async dispatch => {
 
 export const request_refresh = () => async dispatch => {
   try {
-    const res = await fetch('/api/account/refresh', {
+    const res = await fetch(`${NEXT_API_URL}/api/account/refresh`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -114,7 +116,7 @@ export const register =
     });
 
     try {
-      const res = await fetch('/api/account/register', {
+      const res = await fetch(`${NEXT_API_URL}/api/account/register`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -160,7 +162,7 @@ export const login = (username, password) => async dispatch => {
   });
 
   try {
-    const res = await fetch('/api/account/login', {
+    const res = await fetch(`${NEXT_API_URL}/api/account/login`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -196,7 +198,7 @@ export const logout = () => async dispatch => {
   });
 
   try {
-    const res = await fetch('/api/account/logout', {
+    const res = await fetch(`${NEXT_API_URL}/api/account/logout`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
