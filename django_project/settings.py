@@ -201,7 +201,7 @@ LOGGING = {
         "file": {
             "level": "INFO",
             "class": "logging.FileHandler",
-            "filename": "/var/log/django.log",
+            "filename": "/home/django/django.log",
             "formatter": "app",
         },
     },
