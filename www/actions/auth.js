@@ -18,7 +18,7 @@ import {
 
 export const load_user = () => async dispatch => {
   try {
-    const res = await fetch('/api/account/user', {
+    const res = await fetch('/api/v1/account/user', {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -46,7 +46,7 @@ export const load_user = () => async dispatch => {
 
 export const check_auth_status = () => async dispatch => {
   try {
-    const res = await fetch('/api/account/verify', {
+    const res = await fetch('/api/v1/account/verify', {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -74,7 +74,7 @@ export const check_auth_status = () => async dispatch => {
 
 export const request_refresh = () => async dispatch => {
   try {
-    const res = await fetch('/api/account/refresh', {
+    const res = await fetch('/api/v1/account/refresh', {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -114,7 +114,7 @@ export const register =
     });
 
     try {
-      const res = await fetch('/api/account/register', {
+      const res = await fetch('/api/v1/account/register', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

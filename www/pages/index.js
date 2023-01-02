@@ -1,7 +1,6 @@
 import Layout from "../components/Layout";
 
 const HomePage = () => {
-  window.location.replace("http://tipsyudder.com");
 
   return (
     <Layout>
