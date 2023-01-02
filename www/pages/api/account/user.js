@@ -16,7 +16,7 @@ const user = async (req, res) => {
     }
 
     try {
-      const apiRes = await fetch(`${API_URL}/api/v1/account/user`, {
+      const apiRes = await fetch(`${API_URL}/api-v1/account/user`, {
         method: 'GET',
         headers: {
           Accept: 'application/json',

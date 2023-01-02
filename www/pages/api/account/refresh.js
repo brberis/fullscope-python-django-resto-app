@@ -18,7 +18,7 @@ const refresh = async (req, res) => {
     });
 
     try {
-      const apiRes = await fetch(`${API_URL}/api/v1/token/refresh/`, {
+      const apiRes = await fetch(`${API_URL}/api-v1/token/refresh/`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
