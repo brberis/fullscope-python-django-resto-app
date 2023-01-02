@@ -19,7 +19,7 @@ const verify = async (req, res) => {
     });
 
     try {
-      const apiRes = await fetch(`${API_URL}/api/v1/token/verify/`, {
+      const apiRes = await fetch(`${API_URL}/api-v1/token/verify/`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
