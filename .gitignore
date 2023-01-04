@@ -1,9 +1,11 @@
 .venv
 .env
+.env.local
 *.db
 db.sqlite3
 *.pyc
 /staticfiles
+/static
 #frontend
 www/node_modules
 www/.next
