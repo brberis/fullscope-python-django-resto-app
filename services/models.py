@@ -5,7 +5,8 @@ from contacts.models import Person
 from billing.models import Order
 
 STATUS = (
-    ('Active', 'Active'),
+    ('Unconfirmed', 'Unconfirmed'),
+    ('Confirmed', 'Confirmed'),
     ('Suspended', 'Suspended'),
     ('Finished', 'Finished'),
     ('Cancelled', 'Cancelled')
