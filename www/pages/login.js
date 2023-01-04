@@ -15,7 +15,7 @@ export default function Login() {
   });
 
   const { username, password } = formData;
-
+  // this useeffect is for dispatch user info
   useEffect(() => {
     if (dispatch && dispatch !== null && dispatch !== undefined) {
       dispatch(reset_register_success());
