@@ -69,7 +69,9 @@ INSTALLED_APPS = [
     'inventory',
     'contacts',
     'signpage',
-    'production'
+    'production',
+    'orders',
+    'quotes'
 ]
 
 MIDDLEWARE = [

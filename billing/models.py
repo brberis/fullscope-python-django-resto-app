@@ -1,7 +1,5 @@
 from django.db import models
-from contacts.models import Person
-from django.db.models.signals import pre_save
-from .utils import unique_code_id_generator
+from orders.models import Order
 
 INVOICE_STATUS = [('Draft' , ('Draft')),
                     ('Unpaid', ('Unpaid')),
@@ -11,19 +9,6 @@ INVOICE_STATUS = [('Draft' , ('Draft')),
                     ('Deleted', ('Deleted')),
                     ('Void', ('Void'))
                     ]
-
-
-class Order(models.Model):
-    code = models.CharField(max_length=100, null=True, blank=True)
-    date = models.DateField(auto_now_add=True)
-    client = models.ForeignKey(Person, related_name='Client', on_delete=models.CASCADE )
-    amount = models.DecimalField(default=0, max_digits=12, decimal_places=2)
-    special_discount = models.CharField(max_length=250, null=True, blank=True)
-    notes = models.TextField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.code
 
 
 class PaymentType(models.Model):
@@ -72,9 +57,3 @@ class Payment(models.Model):
         return self.amount
 
 
-def pre_save_receiver(sender, instance, *args, **kwargs):
-    if not instance.code:
-        code = unique_code_id_generator(instance)
-        instance.code = code
-
-pre_save.connect(pre_save_receiver, sender=Order)
