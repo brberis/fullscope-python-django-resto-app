@@ -21,6 +21,7 @@ class Type(models.Model):
 class Service(models.Model):
     title = models.CharField(max_length=250)
     description = models.TextField(default='', blank=True)
+    type = models.ForeignKey(Type, related_name='service_type', on_delete=models.PROTECT )
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     status = models.CharField(choices=STATUS, default='Active', max_length=50)
     number_of_guests = models.IntegerField(default=10, null=False)

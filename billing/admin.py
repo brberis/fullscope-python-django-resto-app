@@ -1,9 +1,5 @@
 from django.contrib import admin
-from .models import Order, PaymentType, Invoice, InvoiceItem
-
-@admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
-    pass
+from .models import  PaymentType, Invoice, InvoiceItem
 
 @admin.register(PaymentType)
 class PaymentTypeAdmin(admin.ModelAdmin):
