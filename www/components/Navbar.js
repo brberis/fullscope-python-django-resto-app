@@ -14,6 +14,7 @@ const navigation = [
 const authNavigation = [
   { name: 'Inventory', href: '/dashboard/inventory', current: false },
   { name: 'Calendar', href: '/dashboard/calendar', current: false },
+  { name: 'Catering', href: '/dashboard/catering', current: false },
   { name: 'Recipes', href: '/dashboard/recipes', current: false },
   { name: 'Profile', href: '/dashboard/me', current: false },
   { name: 'Logout', href: '/dashboard/logout', current: false },
