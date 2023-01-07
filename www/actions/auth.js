@@ -15,8 +15,8 @@ import {
   REFRESH_SUCCESS,
   REFRESH_FAIL,
 } from './types';
-const NEXT_API_URL = process.env.NEXT_PUBLIC_API_HOST;
 
+const NEXT_API_URL = process.env.API_HOST || '';
 
 export const load_user = () => async dispatch => {
   try {
