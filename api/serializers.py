@@ -6,6 +6,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from . import models
 from events import models as event_models
+from services import models as service_models
 
 class User(serializers.ModelSerializer):
     class Meta:
@@ -40,5 +41,25 @@ class Event(serializers.ModelSerializer):
             "contact",
             "place"
 
+        )
+
+class ServiceType(serializers.ModelSerializer):
+    class Meta:
+        model = service_models.Type
+        fields = "__all__"
+
+class Service(serializers.ModelSerializer):
+    class Meta:
+        model = service_models.Service
+        fields = (
+            "id",
+            "title",
+            "description",
+            "type",
+            "event",
+            "status",
+            "number_of_guests",
+            "products",
+            "team"
         )
 

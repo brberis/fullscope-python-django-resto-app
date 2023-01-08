@@ -16,6 +16,9 @@ urlpatterns = [
     path('api-v1/events', views.event_list),
     path('api-v1/events/<int:pk>/', views.event_detail),
     path('api-v1/event-categories', views.EventCatViewSet.as_view({'get': 'list'}), name='event-list'),
+    path('api-v1/services', views.service_list),
+    path('api-v1/services/<int:pk>/', views.service_detail),
+    path('api-v1/service-types', views.ServiceTypeViewSet.as_view({'get': 'list'}), name='service-list'),
     path("admin/", admin.site.urls),
     path('signpage/', include('signpage.urls')),
 ]
