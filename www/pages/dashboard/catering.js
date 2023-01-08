@@ -7,6 +7,7 @@ const Catering = () => {
   const router = useRouter();
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const loading = useSelector(state => state.auth.loading);
+  const cateringList = useSelector(state => state.catering);
   const positions = [
     {
       id: 1,
