@@ -1,21 +1,19 @@
 import Navbar from "./Navbar";
+import Header from "./Header";
 import Footer from "./Footer";
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { request_refresh } from '../actions/auth';
 
-const Layout = ({title, content, children}) => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (dispatch && dispatch !== null && dispatch !== undefined) {
-      dispatch(request_refresh());
-    }
-  }, [dispatch]);
+const Layout = ({title, content, children, sectionTitle, breadcrumbs}) => {
+
   return (
     <div>
       <Navbar />
-      <div className="mx-3 m-3">
-        {children}
+      <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 mt-4 mb-3">
+        <Header sectionTitle={sectionTitle} breadcrumbs={breadcrumbs}/>
+    
+          {children}
+ 
       </div>
       <Footer />
     </div>
