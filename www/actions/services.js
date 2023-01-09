@@ -1,8 +1,8 @@
 import {
     LOAD_SERVICE_TYPE_SUCCESS,
     LOAD_SERVICE_TYPE_FAIL,
-    LOAD_SERVICE_SUCCESS,
-    LOAD_SERVICE_FAIL,
+    LOAD_SERVICES_SUCCESS,
+    LOAD_SERVICES_FAIL,
     LOAD_SERVICE_SUCCESS,
     LOAD_SERVICE_FAIL,
     CREATE_SERVICE_SUCCESS,
@@ -19,7 +19,7 @@ const createUrl = (urlSection) => API_URL + urlSection;
 
   export const loadServiceTypes = () => async dispatch => {
     try {
-      const res = await fetch(createUrl('/api/service-types'), {
+      const res = await fetch(createUrl('/api-v1/service-types'), {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -47,7 +47,7 @@ const createUrl = (urlSection) => API_URL + urlSection;
   
   export const loadServices = () => async dispatch => {
     try {
-         const res = await fetch(createUrl('/api/services'), {
+        const res = await fetch(createUrl('/api-v1/services'), {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -57,6 +57,7 @@ const createUrl = (urlSection) => API_URL + urlSection;
       const data = await res.json();
   
       if (res.status === 200) {
+        console.log('SERVICE_DATA', data);
         dispatch({
           type: LOAD_SERVICES_SUCCESS,
           payload: data,
@@ -75,7 +76,7 @@ const createUrl = (urlSection) => API_URL + urlSection;
 
   export const loadService = (id) => async dispatch => {
     try {
-        const res = await fetch(createUrl('/api/services/' + id), {
+        const res = await fetch(createUrl('/api-v1/services/' + id), {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -105,7 +106,7 @@ const createUrl = (urlSection) => API_URL + urlSection;
     const body = JSON.stringify(service);
 
     try {
-         const res = await fetch(createUrl('/api/services'), {
+         const res = await fetch(createUrl('/api-v1/services'), {
         method: 'POST',
         headers: {
           Accept: 'application/json',
