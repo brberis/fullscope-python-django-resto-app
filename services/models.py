@@ -25,9 +25,9 @@ class Service(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     status = models.CharField(choices=STATUS, default='Active', max_length=50)
     number_of_guests = models.IntegerField(default=10, null=False)
-    products = models.ManyToManyField(Item)
-    team = models.ManyToManyField(Person)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    products = models.ManyToManyField(Item, blank=True, null=True)
+    team = models.ManyToManyField(Person, blank=True, null=True)
+    order = models.ForeignKey(Order, blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title 
