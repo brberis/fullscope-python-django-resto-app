@@ -13,6 +13,7 @@ from django.contrib.auth.models import User
 from . import serializers
 
 from events import models as event_models
+from services import models as service_models
 
 
 
@@ -147,3 +148,51 @@ def event_detail(request, pk):
         event.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+class ServiceTypeViewSet(viewsets.ModelViewSet):
+    queryset = service_models.Type.objects.all()
+    serializer_class = serializers.ServiceType
+
+@api_view(['GET', 'POST'])
+def service_list(request):
+    """
+    Retrieve and post elements.
+    """
+    if request.method == 'GET':
+        services = service_models.Service.objects.all()
+        serializer = serializers.Service(services, many=True)
+        return Response(serializer.data, content_type="application/json")
+
+    elif request.method == 'POST':
+        serializer = serializers.Service(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def service_detail(request, pk):
+    """
+    Retrieve, update or delete an element.
+    """
+    try:
+        service = service_models.Service.objects.get(pk=pk)
+    except service_models.Service.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = serializers.Service(service)
+   
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = serializers.Service(service, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        service.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

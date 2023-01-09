@@ -1,12 +1,25 @@
+import { useState, useEffect } from 'react';          
 import Layout from "../../components/Layout";
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CalendarIcon, MapPinIcon, UsersIcon } from '@heroicons/react/20/solid'
+import * as serviceActions from '../../actions/services';
 
 const Catering = () => {
   const router = useRouter();
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const loading = useSelector(state => state.auth.loading);
+  const cateringList = useSelector(state => state);
+  const dispatch = useDispatch();
+  const [serviceAdded, setServiceAdded] = useState(null);
+
+  // render events in calendar
+  useEffect( () => {
+    dispatch(serviceActions.loadServices());
+
+  }, [dispatch, serviceAdded]);
+  console.log('cateringList', cateringList);
+
   const positions = [
     {
       id: 1,

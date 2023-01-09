@@ -1,25 +1,25 @@
 import {
-    LOAD_EVENT_CATEGORIES_SUCCESS,
-    LOAD_EVENT_CATEGORIES_FAIL,
-    LOAD_EVENTS_SUCCESS,
-    LOAD_EVENTS_FAIL,
-    LOAD_EVENT_SUCCESS,
-    LOAD_EVENT_FAIL,
-    CREATE_EVENT_SUCCESS,
-    CREATE_EVENT_FAIL,
-    UPDATE_EVENT_SUCCESS,
-    UPDATE_EVENT_FAIL,
-    DELETE_EVENT_SUCCESS,
-    DELETE_EVENT_FAIL,
+    LOAD_SERVICE_TYPE_SUCCESS,
+    LOAD_SERVICE_TYPE_FAIL,
+    LOAD_SERVICES_SUCCESS,
+    LOAD_SERVICES_FAIL,
+    LOAD_SERVICE_SUCCESS,
+    LOAD_SERVICE_FAIL,
+    CREATE_SERVICE_SUCCESS,
+    CREATE_SERVICE_FAIL,
+    UPDATE_SERVICE_SUCCESS,
+    UPDATE_SERVICE_FAIL,
+    DELETE_SERVICE_SUCCESS,
+    DELETE_SERVICE_FAIL,
 
   } from './types';
   
 const API_URL = process.env.NEXT_PUBLIC_API_HOST;
 const createUrl = (urlSection) => API_URL + urlSection;
 
-  export const loadEventCategories = () => async dispatch => {
+  export const loadServiceTypes = () => async dispatch => {
     try {
-      const res = await fetch(createUrl('/api-v1/event-categories'), {
+      const res = await fetch(createUrl('/api-v1/service-types'), {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -30,24 +30,53 @@ const createUrl = (urlSection) => API_URL + urlSection;
   
       if (res.status === 200) {
         dispatch({
-          type: LOAD_EVENT_CATEGORIES_SUCCESS,
+          type: LOAD_SERVICE_TYPES_SUCCESS,
           payload: data,
         });
       } else {
         dispatch({
-          type: LOAD_EVENT_CATEGORIES_FAIL,
+          type: LOAD_SERVICE_TYPES_FAIL,
         });
       }
     } catch (err) {
       dispatch({
-        type: LOAD_EVENT_CATEGORIES_FAIL,
+        type: LOAD_SERVICE_TYPES_FAIL,
       });
     }
   };
   
-  export const loadEvents = () => async dispatch => {
+  export const loadServices = () => async dispatch => {
     try {
-         const res = await fetch(createUrl('/api-v1/events'), {
+        const res = await fetch(createUrl('/api-v1/services'), {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+        },
+      });
+  
+      const data = await res.json();
+  
+      if (res.status === 200) {
+        console.log('SERVICE_DATA', data);
+        dispatch({
+          type: LOAD_SERVICES_SUCCESS,
+          payload: data,
+        });
+      } else {
+        dispatch({
+          type: LOAD_SERVICES_FAIL,
+        });
+      }
+    } catch (err) {
+      dispatch({
+        type: LOAD_SERVICES_FAIL,
+      });
+    }
+  };
+
+  export const loadService = (id) => async dispatch => {
+    try {
+        const res = await fetch(createUrl('/api-v1/services/' + id), {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -58,54 +87,26 @@ const createUrl = (urlSection) => API_URL + urlSection;
   
       if (res.status === 200) {
         dispatch({
-          type: LOAD_EVENTS_SUCCESS,
+          type: LOAD_SERVICE_SUCCESS,
           payload: data,
         });
       } else {
         dispatch({
-          type: LOAD_EVENTS_FAIL,
+          type: LOAD_SERVICE_FAIL,
         });
       }
     } catch (err) {
       dispatch({
-        type: LOAD_EVENTS_FAIL,
+        type: LOAD_SERVICE_FAIL,
       });
     }
   };
 
-  export const loadEvent = (id) => async dispatch => {
-    try {
-        const res = await fetch(createUrl('/api-v1/events/' + id), {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-        },
-      });
-  
-      const data = await res.json();
-  
-      if (res.status === 200) {
-        dispatch({
-          type: LOAD_EVENT_SUCCESS,
-          payload: data,
-        });
-      } else {
-        dispatch({
-          type: LOAD_EVENT_FAIL,
-        });
-      }
-    } catch (err) {
-      dispatch({
-        type: LOAD_EVENT_FAIL,
-      });
-    }
-  };
-
-  export const createEvents = (event) => async dispatch => {
-    const body = JSON.stringify(event);
+  export const createServices = (service) => async dispatch => {
+    const body = JSON.stringify(service);
 
     try {
-         const res = await fetch(createUrl('/api-v1/events'), {
+         const res = await fetch(createUrl('/api-v1/services'), {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -116,16 +117,16 @@ const createUrl = (urlSection) => API_URL + urlSection;
     
       if (res.status === 201) {
         dispatch({
-          type: CREATE_EVENT_SUCCESS,
+          type: CREATE_SERVICE_SUCCESS,
         });
       } else {
         dispatch({
-          type: CREATE_EVENT_FAIL,
+          type: CREATE_SERVICE_FAIL,
         });
       }
     } catch (err) {
       dispatch({
-        type: CREATE_EVENT_FAIL,
+        type: CREATE_SERVICE_FAIL,
       });
     }
   };

@@ -15,7 +15,7 @@ const events = async (req, res) => {
     }
 
     try {
-      const apiRes = await fetch(`${API_URL}/api/events`, {
+      const apiRes = await fetch(`${API_URL}/api-v1/events`, {
         method: 'GET',
         headers: {
           Accept: 'application/json',
