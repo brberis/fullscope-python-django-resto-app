@@ -51,9 +51,11 @@ class ServiceType(serializers.ModelSerializer):
 class Service(serializers.ModelSerializer):
     class Meta:
         model = service_models.Service
+        depth = 1
         fields = (
             "id",
             "title",
+            "location",
             "description",
             "type",
             "event",

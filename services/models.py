@@ -20,6 +20,7 @@ class Type(models.Model):
 
 class Service(models.Model):
     title = models.CharField(max_length=250)
+    location = models.CharField(max_length=250, blank=True, null=True)
     description = models.TextField(default='', blank=True)
     type = models.ForeignKey(Type, related_name='service_type', on_delete=models.PROTECT )
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
