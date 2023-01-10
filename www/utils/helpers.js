@@ -97,3 +97,9 @@ export function dateToMonthYear(date) {
   return formattedDate;
 }
 
+// get date and convert to 05 January, 2022
+export function dateToReadableFormat(date) {
+  const momentDate = moment(date); 
+  const formattedDate = momentDate.format('DD MMMM YYYY')
+  return formattedDate;
+}
