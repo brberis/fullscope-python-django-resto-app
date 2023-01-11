@@ -1,6 +1,6 @@
 import {
-    LOAD_SERVICE_TYPE_SUCCESS,
-    LOAD_SERVICE_TYPE_FAIL,
+    LOAD_SERVICE_TYPES_SUCCESS,
+    LOAD_SERVICE_TYPES_FAIL,
     LOAD_SERVICES_SUCCESS,
     LOAD_SERVICES_FAIL,
     LOAD_SERVICE_SUCCESS,
@@ -76,7 +76,7 @@ const createUrl = (urlSection) => API_URL + urlSection;
 
   export const loadService = (id) => async dispatch => {
     try {
-        const res = await fetch(createUrl('/api-v1/services/' + id), {
+        const res = await fetch(createUrl('/api-v1/services/' + id + '/'), {
         method: 'GET',
         headers: {
           Accept: 'application/json',

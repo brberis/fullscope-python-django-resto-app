@@ -7,6 +7,7 @@ import * as serviceActions from '../../actions/services';
 import { dateToReadableFormat } from '../../utils/helpers';
 import AddService from '../../components/Services/AddService';
 const Catering = () => {
+  const [isOpenAddService, setIsOpenAddService] = useState(false);
   const router = useRouter();
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const loading = useSelector(state => state.auth.loading);
@@ -19,42 +20,47 @@ const Catering = () => {
     dispatch(serviceActions.loadServices());
   }, [dispatch, serviceAdded]);
 
-  const positions = [
-    {
-      id: 1,
-      title: 'Back End Developer',
-      type: 'Full-time',
-      location: 'Remote',
-      department: 'Engineering',
-      closeDate: '2020-01-07',
-      closeDateFull: 'January 7, 2020',
-    },
-    {
-      id: 2,
-      title: 'Front End Developer',
-      type: 'Full-time',
-      location: 'Remote',
-      department: 'Engineering',
-      closeDate: '2020-01-07',
-      closeDateFull: 'January 7, 2020',
-    },
-    {
-      id: 3,
-      title: 'User Interface Designer',
-      type: 'Full-time',
-      location: 'Remote',
-      department: 'Design',
-      closeDate: '2020-01-14',
-      closeDateFull: 'January 14, 2020',
-    },
-  ]
+  // const positions = [
+  //   {
+  //     id: 1,
+  //     title: 'Back End Developer',
+  //     type: 'Full-time',
+  //     location: 'Remote',
+  //     department: 'Engineering',
+  //     closeDate: '2020-01-07',
+  //     closeDateFull: 'January 7, 2020',
+  //   },
+  //   {
+  //     id: 2,
+  //     title: 'Front End Developer',
+  //     type: 'Full-time',
+  //     location: 'Remote',
+  //     department: 'Engineering',
+  //     closeDate: '2020-01-07',
+  //     closeDateFull: 'January 7, 2020',
+  //   },
+  //   {
+  //     id: 3,
+  //     title: 'User Interface Designer',
+  //     type: 'Full-time',
+  //     location: 'Remote',
+  //     department: 'Design',
+  //     closeDate: '2020-01-14',
+  //     closeDateFull: 'January 14, 2020',
+  //   },
+  // ]
 
   // if (typeof window !== 'undefined' && !loading && !isAuthenticated) {
   //   router.push('/login');
   // }
 
   const incomingAction = (incomingActionFromParent)=> {
-    console.log('CLICK', incomingActionFromParent);
+    setIsOpenAddService(incomingActionFromParent);
+  }
+
+  const handleClose = () => {
+    setIsOpenAddService(false);
+    // setIsOpenViewEvent(false);
   }
 
   if (!cateringList) {
@@ -64,6 +70,7 @@ const Catering = () => {
   return (
     <Layout sectionTitle={'Catering Events'} incomingAction={incomingAction} action={'Add Catering'} breadcrumbs={['Dashboard', 'Catering Events']} >
       <div className="overflow-hidden bg-white shadow sm:rounded-md">
+      { isOpenAddService ? <AddService isOpen={isOpenAddService} onClose={handleClose} /> : null } 
         <ul role="list" className="divide-y divide-gray-200">
           {cateringList.map((cater) => (
             <li key={cater.id}>

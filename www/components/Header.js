@@ -5,12 +5,9 @@ export default function Header(props) {
   const { sectionTitle, action, incomingAction, breadcrumbs} = props;
   const [ariaCurrent, setAriaCurrent] = useState(null);
 
-  // const actionHandler = function (value) {
-  //   props.onClick(value);
-  // }
   const actionHandler = (e) => {
     incomingAction(e);
-};
+  };
 
   return (
     <div className='mb-4'>  
@@ -48,7 +45,7 @@ export default function Header(props) {
           <div className="mt-4 flex flex-shrink-0 md:mt-0 md:ml-4">
             <button
               type="button"
-              onClick={() => actionHandler('clicled')}
+              onClick={() => actionHandler(true)}
               className="ml-3 inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               {action}
