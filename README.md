@@ -7,7 +7,8 @@
 
 ## Description
 
-This project under development is a web application for managing a restaurant and catering company. It is built using a combination of technologies including Django, Next.js, REST API, React Redux, MySQL, JWT authentication, and Tailwind CSS. The application is deployed on DigitalOcean App service.
+This project under development is a web application for managing a restaurant and catering company. It is built using a combination of technologies including Django, Next.js, REST API, React Redux, MySQL, JWT authentication, and Tailwind CSS. The application is deployed on DigitalOcean Droplet using NodeJs, NGINX and Gunicorn.
+
 
 The application includes several features to aid in managing the business, such as:
 
@@ -100,5 +101,5 @@ Please send your questions [here](mailto:cristobal@barberis.com?subject=[GitHub]
 
 ## Credits
 
-* Cristobal A Barberis%      
+* Cristobal A Barberis    
 
