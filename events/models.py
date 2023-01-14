@@ -29,7 +29,6 @@ class Event(models.Model):
     event_date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
-    contact = models.ForeignKey(Person, null=True, on_delete=models.SET_NULL)
     place = models.TextField(null=True)
 
     def __str__(self):

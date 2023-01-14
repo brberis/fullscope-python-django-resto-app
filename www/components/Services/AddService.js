@@ -70,12 +70,15 @@ export default function AddService(props) {
   const formHandler = async (e) => {
     e.preventDefault()
     const newService = {
-    title: e.target.title.value,
-    description: e.target.description.value,
-    service_date: selected.toISOString().split('T')[0],
-    start_time: timeTo24hours(`
-    ${e.target.startHour.value}:${e.target.startMinutes.value} ${e.target.startHalves.value}), end_time: timeTo24hours(${e.target.endHour.value}:${e.target.endMinutes.value} ${e.target.endHalves.value}`),
-    type: e.target.type.value
+      title: e.target.title.value,
+      location: e.target.location.value,
+      description: e.target.description.value,
+      type: e.target.type.value,
+      service_date: selected.toISOString().split('T')[0],
+      start_time: timeTo24hours(`
+      ${e.target.startHour.value}:${e.target.startMinutes.value} ${e.target.startHalves.value}`), 
+      end_time: timeTo24hours(`
+      ${e.target.endHour.value}:${e.target.endMinutes.value} ${e.target.endHalves.value}`),
     };
   
 

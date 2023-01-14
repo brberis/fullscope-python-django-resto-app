@@ -71,7 +71,9 @@ INSTALLED_APPS = [
     'signpage',
     'production',
     'orders',
-    'quotes'
+    'quotes',
+    'payroll',
+    'providers'
 ]
 
 MIDDLEWARE = [

@@ -31,6 +31,10 @@ class Person(models.Model):
     phone = models.CharField(verbose_name=('Phone Number') , max_length=40, null=False, blank=True) # validators should be a list
     email = models.EmailField(max_length=70, null=False, blank=True)
     company = models.ForeignKey(Company, verbose_name=('Company'), null=True, blank=True, related_name='person', on_delete=models.SET_NULL)
+    address = models.CharField(max_length=200, verbose_name=('Address'), null=False, blank=True)
+    city = models.CharField(max_length=70, verbose_name=('City'), null=False, blank=True)
+    state = models.CharField(max_length=200, verbose_name=('State'), null=False, blank=True)
+    zip_code = models.CharField(max_length=200, verbose_name=('Zip Code'), null=False, blank=True)
     user = models.OneToOneField(
         getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
         null=True, blank=True, related_name='persons', on_delete=models.CASCADE)
