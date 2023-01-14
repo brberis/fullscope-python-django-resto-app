@@ -5,6 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import permissions, status
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
+from django.db import transaction
+
 
 
 from django.shortcuts import render
@@ -85,7 +87,7 @@ class LoadUserView(APIView):
     def get(self, request, format=None):
         try:
             user = request.user
-            user = serializers.User(user)
+            user = serializers.UserSerializer(user)
 
             return Response(
                 {'user': user.data},
@@ -155,20 +157,22 @@ class ServiceTypeViewSet(viewsets.ModelViewSet):
 
 @api_view(['GET', 'POST'])
 def service_list(request):
-    """
-    Retrieve and post elements.
-    """
-    if request.method == 'GET':
-        services = service_models.Service.objects.all()
-        serializer = serializers.ServiceSerializer(services, many=True)
-        return Response(serializer.data, content_type="application/json")
+    """All or Nothing"""
+    with transaction.atomic():
+        """
+        Retrieve and post elements.
+        """
+        if request.method == 'GET':
+            services = service_models.Service.objects.all()
+            serializer = serializers.ServiceSerializer(services, many=True)
+            return Response(serializer.data, content_type="application/json")
 
-    elif request.method == 'POST':
-        serializer = serializers.ServiceSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        elif request.method == 'POST':
+            serializer = serializers.ServiceSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -196,3 +200,17 @@ def service_detail(request, pk):
     elif request.method == 'DELETE':
         service.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class ServiceViewSet(viewsets.ModelViewSet):
+    queryset = service_models.Service.objects.all()
+    serializer_class = serializers.ServiceSerializer
+
+    def create(self, request, *args, **kwargs):
+        with transaction.atomic():
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
