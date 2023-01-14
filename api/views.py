@@ -19,7 +19,7 @@ from services import models as service_models
 
 class Profile(generics.RetrieveAPIView):
     permission_classes = (IsAuthenticated,)
-    serializer_class = serializers.User
+    serializer_class = serializers.UserSerializer
 
     def get_object(self):
         return self.request.user
@@ -101,7 +101,7 @@ class LoadUserView(APIView):
 
 class EventCatViewSet(viewsets.ModelViewSet):
     queryset = event_models.EventCategory.objects.all()
-    serializer_class = serializers.EventCategory
+    serializer_class = serializers.EventCategorySerializer
 
 
 @api_view(['GET', 'POST'])
@@ -133,12 +133,12 @@ def event_detail(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = serializers.Event(event)
+        serializer = serializers.EventSerializer(event)
    
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = serializers.Event(event, data=request.data)
+        serializer = serializers.EventSerializer(event, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -151,7 +151,7 @@ def event_detail(request, pk):
 
 class ServiceTypeViewSet(viewsets.ModelViewSet):
     queryset = service_models.Type.objects.all()
-    serializer_class = serializers.ServiceType
+    serializer_class = serializers.ServiceTypeSerializer
 
 @api_view(['GET', 'POST'])
 def service_list(request):
@@ -160,11 +160,11 @@ def service_list(request):
     """
     if request.method == 'GET':
         services = service_models.Service.objects.all()
-        serializer = serializers.Service(services, many=True)
+        serializer = serializers.ServiceSerializer(services, many=True)
         return Response(serializer.data, content_type="application/json")
 
     elif request.method == 'POST':
-        serializer = serializers.Service(data=request.data)
+        serializer = serializers.ServiceSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -182,12 +182,12 @@ def service_detail(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = serializers.Service(service)
+        serializer = serializers.ServiceSerializer(service)
    
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = serializers.Service(service, data=request.data)
+        serializer = serializers.ServiceSerializer(service, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
