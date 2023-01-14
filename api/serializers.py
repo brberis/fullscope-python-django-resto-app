@@ -1,4 +1,5 @@
 from django.conf import settings
+from rest_framework.fields import DateField, TimeField
 from rest_framework import serializers
 from rest_framework_simplejwt import serializers as jwt_serializers
 from rest_framework_simplejwt.settings import api_settings as jwt_settings
@@ -7,8 +8,10 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from . import models
 from events import models as event_models
 from services import models as service_models
+from contacts import models as contact_models
+from payroll import models as payroll_models
 
-class User(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
         fields = (
@@ -21,12 +24,46 @@ class User(serializers.ModelSerializer):
             "last_login",
         )
 
-class EventCategory(serializers.ModelSerializer):
+## Contacts
+class PersonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = contact_models.Person
+        fields = (
+            "first_name",
+            "last_name",
+            "phone",
+            "email",
+            "company",
+            "address",
+            "city",
+            "state",
+            "zip_code",
+            "user"
+        )
+
+class CompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = contact_models.Company
+        fields = (
+            "company_code",
+            "contact_type",
+            "company_name",
+            "email",
+            "address",
+            "city",
+            "state",
+            "zip_code",
+            "phone",
+            "webpage"            
+        )
+
+## Events
+class EventCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = event_models.EventCategory
         fields = "__all__"
 
-class Event(serializers.ModelSerializer):
+class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = event_models.Event
         fields = (
@@ -40,28 +77,77 @@ class Event(serializers.ModelSerializer):
             "end_time",
             "contact",
             "place"
-
         )
 
-class ServiceType(serializers.ModelSerializer):
+##Service
+class ServiceTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = service_models.Type
         fields = "__all__"
 
-class Service(serializers.ModelSerializer):
+class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = service_models.Service
         depth = 1
+        event_date = DateField()
+        start_time = TimeField()
+        end_time = TimeField()
         fields = (
             "id",
             "title",
+            "contact",
             "location",
             "description",
             "type",
             "event",
+            "event_date",
+            "start_time",
+            "end_time",
             "status",
             "number_of_guests",
             "products",
             "team"
         )
 
+
+## Payroll
+class EmployeeSerializer(serializers.ModelSerializer):
+    person = PersonSerializer(read_only=True)
+
+    class Meta:
+        model = payroll_models.Employee
+        fields = (
+            'id', 
+            'person', 
+            'job_title', 
+            'salary', 
+            'hire_date', 
+            'is_active'
+        )
+
+class PayrollPeriodSerializer(serializers.ModelSerializer):
+    processed_by = EmployeeSerializer(read_only=True)
+    class Meta:
+        model = payroll_models.PayrollPeriod
+        fields = (
+            'id', 
+            'start_date', 
+            'end_date', 
+            'processed_date', 
+            'processed_by'
+            )
+
+class PaycheckSerializer(serializers.ModelSerializer):
+    employee = EmployeeSerializer(read_only=True)
+    payroll_period = PayrollPeriodSerializer(read_only=True)
+    class Meta:
+        model = payroll_models.Paycheck
+        fields = (
+            'id', 
+            'employee', 
+            'payroll_period', 
+            'gross_pay', 
+            'net_pay', 
+            'deductions', 
+            'taxes'
+            )
