@@ -25,22 +25,6 @@ class UserSerializer(serializers.ModelSerializer):
         )
 
 ## Contacts
-class PersonSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = contact_models.Person
-        fields = (
-            "first_name",
-            "last_name",
-            "phone",
-            "email",
-            "company",
-            "address",
-            "city",
-            "state",
-            "zip_code",
-            "user"
-        )
-
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = contact_models.Company
@@ -55,6 +39,23 @@ class CompanySerializer(serializers.ModelSerializer):
             "zip_code",
             "phone",
             "webpage"            
+        )
+class PersonSerializer(serializers.ModelSerializer):
+    company = CompanySerializer(read_only=True)
+    class Meta:
+        model = contact_models.Person
+
+        fields = (
+            "first_name",
+            "last_name",
+            "phone",
+            "email",
+            "company",
+            "address",
+            "city",
+            "state",
+            "zip_code",
+            "user"
         )
 
 ## Events
@@ -86,28 +87,10 @@ class ServiceTypeSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class ServiceSerializer(serializers.ModelSerializer):
+    event = EventSerializer()
     class Meta:
         model = service_models.Service
-        depth = 1
-        event_date = DateField()
-        start_time = TimeField()
-        end_time = TimeField()
-        fields = (
-            "id",
-            "title",
-            "contact",
-            "location",
-            "description",
-            "type",
-            "event",
-            "event_date",
-            "start_time",
-            "end_time",
-            "status",
-            "number_of_guests",
-            "products",
-            "team"
-        )
+        fields = "__all__"
 
 
 ## Payroll
