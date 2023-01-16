@@ -36,7 +36,7 @@ DEBUG = True
 # Find out what the IP addresses are at run time
 # This is necessary because otherwise Gunicorn will reject the connections
 def ip_addresses():
-    ip_list = ['tipsycreamery.com','127.0.0.1', 'corsheaders']
+    ip_list = ['tipsycreamery.com','127.0.0.1', 'localhost',  'corsheaders']
     for interface in netifaces.interfaces():
         addrs = netifaces.ifaddresses(interface)
         for x in (netifaces.AF_INET, netifaces.AF_INET6):
@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'django_extensions',
+    'django_elasticsearch_dsl',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'api',
@@ -104,6 +105,12 @@ TEMPLATES = [
         },
     },
 ]
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'localhost:9200'
+    },
+}
 
 WSGI_APPLICATION = 'django_project.wsgi.application'
 

@@ -6,6 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as serviceActions from '../../actions/services';
 import 'react-day-picker/dist/style.css';
 import {timeTo24hours} from '../../utils/helpers';
+import AsyncSelect from "react-select/async";
+
+const testBook = {
+  _id: "1",
+  title: "The Lord of the Rings",
+  authors: "J.R.R. Tolkien",
+  description: "A classic book",
+};
 
 export default function AddService(props) {
   const today = new Date();
@@ -18,7 +26,10 @@ export default function AddService(props) {
   const [endHalves, setEndHalves] = useState('AM');
   const dispatch = useDispatch();
   const types = useSelector(state => state.services.serviceTypes);
- 
+
+  const [currentContact, setCurrentContact] = useState(null);
+  const [similarContacts, setSimilarContacts] = useState([]);
+
 
   // define a callback function that accepts a variable as an argument
   const handleClose = (result) => {
@@ -81,6 +92,28 @@ export default function AddService(props) {
       ${e.target.endHour.value}:${e.target.endMinutes.value} ${e.target.endHalves.value}`),
     };
   
+  //   {
+  //     "title": "My Service",
+  //     "contact": 1,
+  //     "location": "My Location",
+  //     "description": "My Service Description",
+  //     "type": 1,
+  //     "event": {
+  //         "title": "My Event",
+  //         "description": "My Event Description",
+  //         "category": 1,
+  //         "status": "Open",
+  //         "event_date": "2022-01-01",
+  //         "start_time": "09:00:00",
+  //         "end_time": "17:00:00",
+  //         "place": "My Place"
+  //     },
+  //     "status": "Active",
+  //     "number_of_guests": 100,
+  //     "products": [1, 2],
+  //     "team": [1, 2],
+  //     "order": 1
+  // }
 
     await dispatch(serviceActions.createServices(newService));
    
@@ -133,6 +166,7 @@ export default function AddService(props) {
                                   >
                                     Title
                                   </label>
+                                  
                                   <div className="mt-1 rounded-md shadow-sm">
                                     <input
                                       id="title"
@@ -140,6 +174,39 @@ export default function AddService(props) {
                                       type="text"
                                       required
                                       className="form-input block w-full py-2 px-3 rounded-md leading-5 transition duration-150 ease-in-out"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="col-span-6 ">
+                                  <label
+                                    htmlFor="title"
+                                    className="block text-sm font-medium leading-5 text-gray-700"
+                                  >
+                                    Client
+                                  </label>       
+                                  <div className="mt-1 rounded-md shadow-sm">
+                                    <AsyncSelect
+                                      defaultOptions
+                                      isClearable={true}
+                                      placeholder="Start typing a contact name..."
+                                      onChange={async (newValue) => {
+                                        setCurrentContact(newValue?.value || null);
+                                      }}
+                                      loadOptions={async (inputValue) => {
+                                        if (inputValue.length < 2) return;
+                                        const response = await fetch(
+                                          `http://localhost:4001/api-v1/contact-search?query=${inputValue}`
+                                        );
+                                        const data = await response.json();
+                                        return data.map((item) => ({
+                                          value: item,
+                                          label: (
+                                            <>
+                                              {item.first_name + ' ' + item.last_name}
+                                            </>
+                                          ),
+                                        }));
+                                      }}
                                     />
                                   </div>
                                 </div>
