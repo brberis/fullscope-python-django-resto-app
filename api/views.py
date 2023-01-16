@@ -1,12 +1,14 @@
 from django.utils import timezone
 from rest_framework import generics, response, viewsets
 from rest_framework.response import Response
+from elasticsearch_dsl import Search, Q
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import permissions, status
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from django.db import transaction
-
+import json
+from elasticsearch_dsl.response import AttrDict
 
 
 from django.shortcuts import render
@@ -16,7 +18,13 @@ from . import serializers
 
 from events import models as event_models
 from services import models as service_models
+from contacts import models as contact_models
 
+class AttrDictEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, AttrDict):
+            return dict(obj)
+        return json.JSONEncoder.default(self, obj)
 
 
 class Profile(generics.RetrieveAPIView):
@@ -83,6 +91,22 @@ class RegisterView(APIView):
             )
 
 
+class ContactSearchView(APIView):
+
+    def get(self, request):
+        query = request.query_params.get('query')
+        s = contact_models.PersonDocument.search().query(
+            'bool',
+            should=[
+                Q('match_phrase_prefix', first_name=query),
+                Q('match_phrase_prefix', last_name=query)
+            ])        
+        response = s.execute()
+        print(response)
+        results = [hit.to_dict() for hit in response.hits]
+        return Response(results)
+
+
 class LoadUserView(APIView):
     def get(self, request, format=None):
         try:
@@ -113,11 +137,11 @@ def event_list(request):
     """
     if request.method == 'GET':
         events = event_models.Event.objects.all()
-        serializer = serializers.Event(events, many=True)
+        serializer = serializers.EventSerializer(events, many=True)
         return Response(serializer.data, content_type="application/json")
 
     elif request.method == 'POST':
-        serializer = serializers.Event(data=request.data)
+        serializer = serializers.EventSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -212,5 +236,10 @@ class ServiceViewSet(viewsets.ModelViewSet):
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
