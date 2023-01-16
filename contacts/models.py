@@ -1,6 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
 from django.conf import settings
+from django_elasticsearch_dsl import (
+    Document,
+    fields,
+    Index,
+)
+from django_elasticsearch_dsl.registries import registry
 
 CONTACT_TYPE = (
     ('Customer', 'Customer'),
@@ -26,7 +32,7 @@ class Company(models.Model):
 
 class Person(models.Model):
 
-    first_name = models.CharField(max_length=100, verbose_name=('Name'))
+    first_name = models.CharField(max_length=100, verbose_name=('First Name'))
     last_name = models.CharField(max_length=100, verbose_name=('Last Name'), null=False, blank=True)
     phone = models.CharField(verbose_name=('Phone Number') , max_length=40, null=False, blank=True) # validators should be a list
     email = models.EmailField(max_length=70, null=False, blank=True)
@@ -41,3 +47,19 @@ class Person(models.Model):
 
     def __str__(self):
         return self.last_name
+
+persons = Index('person')
+
+
+@registry.register_document
+@persons.document
+class PersonDocument(Document):
+    first_name = fields.TextField()
+    last_name = fields.TextField() 
+    
+    class Django:
+        model = Person
+
+ 
+
+

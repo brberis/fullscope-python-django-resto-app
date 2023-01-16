@@ -76,7 +76,6 @@ class EventSerializer(serializers.ModelSerializer):
             "event_date",
             "start_time",
             "end_time",
-            "contact",
             "place"
         )
 
