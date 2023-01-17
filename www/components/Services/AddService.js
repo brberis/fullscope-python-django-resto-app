@@ -195,10 +195,10 @@ export default function AddService(props) {
                                       loadOptions={async (inputValue) => {
                                         if (inputValue.length < 2) return;
                                         const response = await fetch(
-                                          `http://localhost:4001/api-v1/contact-search?query=${inputValue}`
+                                          `/api/contacts?query=${inputValue}`
                                         );
                                         const data = await response.json();
-                                        return data.map((item) => ({
+                                        return data?.contacts.map((item) => ({
                                           value: item,
                                           label: (
                                             <>
