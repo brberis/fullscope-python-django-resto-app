@@ -1,4 +1,5 @@
 import cookie from 'cookie';
+// import { NextApiRequest, NextApiResponse } from 'next';
 
 const API_URL = process.env.NEXT_PUBLIC_API_HOST;
 
@@ -7,6 +8,8 @@ const contacts = async (req, res) => {
   if (req.method === 'GET') {
     const cookies = cookie.parse(req.headers.cookie ?? '');
     const access = cookies.access ?? false;
+    const { query } = req.query;
+    console.log('QUERY: ', query);
 
     if (!access) {
       return res.status(401).json({
@@ -15,7 +18,7 @@ const contacts = async (req, res) => {
     }
 
     try {
-      const apiRes = await fetch(`${API_URL}/api-v1/contacts`, {
+      const apiRes = await fetch(`${API_URL}/api-v1/contact-search?query=${query}`, {
         method: 'GET',
         headers: {
           Accept: 'application/json',
