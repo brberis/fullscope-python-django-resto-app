@@ -91,6 +91,13 @@ class ServiceSerializer(serializers.ModelSerializer):
         model = service_models.Service
         fields = "__all__"
 
+    ## To create service object with nested event.
+    def create(self, validated_data):
+        event_data = validated_data.pop("event")
+        event = EventSerializer.create(EventSerializer(), validated_data=event_data)
+        service = service_models.Service.objects.create(event=event, **validated_data)
+        return service
+
 
 ## Payroll
 class EmployeeSerializer(serializers.ModelSerializer):

@@ -7,6 +7,7 @@ import * as serviceActions from '../../actions/services';
 import 'react-day-picker/dist/style.css';
 import {timeTo24hours} from '../../utils/helpers';
 import AsyncSelect from "react-select/async";
+import AddContact from '../../components/Contacts/AddContacts';
 
 const testBook = {
   _id: "1",
@@ -20,6 +21,8 @@ export default function AddService(props) {
   const [open, setOpen] = useState(props.isOpen)
   const [selected, setSelected] = useState(new Date());
   const [endHour, setEndHour] = useState(10);
+  const [isOpenAddContact, setIsOpenAddContact] = useState(false);
+  
   // const [endMinutesDef, setEndMinutes] = useState(0);
   const [endMinutes, setEndMinutes] = useState(0);
   const [startHalves, setStartHalves] = useState('AM');
@@ -39,9 +42,18 @@ export default function AddService(props) {
     props.onClose(result)
   }
 
+  const handleContactClose = () => {
+    setIsOpenAddContact(false);
+  }
+
   useEffect( () => {
     dispatch(serviceActions.loadServiceTypes());
   }, [dispatch]);
+
+  useEffect( () => {
+    console.log(currentContact);;
+  }, [currentContact]);
+
 
   const handleChange = (event) => {
     if (event.target.name === 'startHour') {
@@ -78,42 +90,32 @@ export default function AddService(props) {
     }
   };
 
+  const newContactHandler = () => {
+    setIsOpenAddContact(true);
+  }
+
+
   const formHandler = async (e) => {
     e.preventDefault()
     const newService = {
       title: e.target.title.value,
+      contact: currentContact.id,
       location: e.target.location.value,
       description: e.target.description.value,
       type: e.target.type.value,
-      service_date: selected.toISOString().split('T')[0],
-      start_time: timeTo24hours(`
+      event: {
+      title: e.target.title.value,
+      description: e.target.description.value,
+      category: 1,
+      event_date: selected.toISOString().split('T')[0],
+      "start_time": timeTo24hours(`
       ${e.target.startHour.value}:${e.target.startMinutes.value} ${e.target.startHalves.value}`), 
-      end_time: timeTo24hours(`
+      "end_time": timeTo24hours(`
       ${e.target.endHour.value}:${e.target.endMinutes.value} ${e.target.endHalves.value}`),
+      "place": e.target.location.value,
+      }
     };
   
-  //   {
-  //     "title": "My Service",
-  //     "contact": 1,
-  //     "location": "My Location",
-  //     "description": "My Service Description",
-  //     "type": 1,
-  //     "event": {
-  //         "title": "My Event",
-  //         "description": "My Event Description",
-  //         "category": 1,
-  //         "status": "Open",
-  //         "event_date": "2022-01-01",
-  //         "start_time": "09:00:00",
-  //         "end_time": "17:00:00",
-  //         "place": "My Place"
-  //     },
-  //     "status": "Active",
-  //     "number_of_guests": 100,
-  //     "products": [1, 2],
-  //     "team": [1, 2],
-  //     "order": 1
-  // }
 
     await dispatch(serviceActions.createServices(newService));
    
@@ -125,6 +127,7 @@ export default function AddService(props) {
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10"  onClose={setOpen}>
+      { isOpenAddContact ? <AddContact isAddContactOpen={isOpenAddContact} onClose={handleContactClose} /> : null } 
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -177,38 +180,40 @@ export default function AddService(props) {
                                     />
                                   </div>
                                 </div>
-                                <div className="col-span-6 ">
-                                  <label
-                                    htmlFor="title"
-                                    className="block text-sm font-medium leading-5 text-gray-700"
+                                <div className="w-full -mb-5">
+                                  <label htmlFor="title" className="text-sm font-medium leading-5 text-gray-700">
+                                      Client
+                                  </label>
+                                </div>
+                                <div className="col-span-6 flex mt-0 rounded-md shadow-sm">
+                                  <AsyncSelect
+                                    defaultOptions
+                                    isClearable={true}
+                                    placeholder="Start typing a contact name..."
+                                    onChange={async (newValue) => {
+                                      setCurrentContact(newValue?.value || null);
+                                    }}
+                                    loadOptions={async (inputValue) => {
+                                      if (inputValue.length < 2) return;
+                                      const response = await fetch(`/api/contacts?query=${inputValue}`);
+                                      const data = await response.json();
+                                      return data?.contacts.map((item) => ({
+                                        value: item,
+                                        label: (
+                                          <>
+                                            {item.first_name + ' ' + item.last_name}
+                                          </>
+                                        ),
+                                      }));
+                                    }}
+                                  />
+                                  <button
+                                  onClick={newContactHandler}
+                                  type="button"
+                                  className="inline-flex ml-5 items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                   >
-                                    Client
-                                  </label>       
-                                  <div className="mt-1 rounded-md shadow-sm">
-                                    <AsyncSelect
-                                      defaultOptions
-                                      isClearable={true}
-                                      placeholder="Start typing a contact name..."
-                                      onChange={async (newValue) => {
-                                        setCurrentContact(newValue?.value || null);
-                                      }}
-                                      loadOptions={async (inputValue) => {
-                                        if (inputValue.length < 2) return;
-                                        const response = await fetch(
-                                          `/api/contacts?query=${inputValue}`
-                                        );
-                                        const data = await response.json();
-                                        return data?.contacts.map((item) => ({
-                                          value: item,
-                                          label: (
-                                            <>
-                                              {item.first_name + ' ' + item.last_name}
-                                            </>
-                                          ),
-                                        }));
-                                      }}
-                                    />
-                                  </div>
+                                    Add New
+                                  </button>
                                 </div>
                                 <div className="col-span-6 ">
                                   <label
