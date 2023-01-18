@@ -9,7 +9,6 @@ const contacts = async (req, res) => {
     const cookies = cookie.parse(req.headers.cookie ?? '');
     const access = cookies.access ?? false;
     const { query } = req.query;
-    console.log('QUERY: ', query);
 
     if (!access) {
       return res.status(401).json({
@@ -26,7 +25,6 @@ const contacts = async (req, res) => {
         },
       });
       const data = await apiRes.json();
-
       if (apiRes.status === 200) {
         return res.status(200).json({ contacts: data });
       } else {

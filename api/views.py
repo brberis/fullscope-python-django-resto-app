@@ -102,8 +102,9 @@ class ContactSearchView(APIView):
                 Q('match_phrase_prefix', last_name=query)
             ])        
         response = s.execute()
-        print(response)
-        results = [hit.to_dict() for hit in response.hits]
+        
+        ## this line add the id and create a dict with first_name and last_name
+        results = [{'id': hit.meta.id, **hit.to_dict()} for hit in response.hits]
         return Response(results)
 
 
@@ -231,8 +232,10 @@ class ServiceViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         with transaction.atomic():
+            print(request.data)
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
+            print("ERROR", serializer.errors)
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
