@@ -26,7 +26,7 @@ class Service(models.Model):
     description = models.TextField(default='', blank=True)
     type = models.ForeignKey(Type, related_name='service_type', on_delete=models.PROTECT )
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    status = models.CharField(choices=STATUS, default='Active', max_length=50)
+    status = models.CharField(choices=STATUS, default='Unconfirmed', max_length=50)
     number_of_guests = models.IntegerField(default=10, null=False)
     products = models.ManyToManyField(Item, blank=True, null=True)
     team = models.ManyToManyField(Employee, blank=True, null=True)
@@ -34,3 +34,5 @@ class Service(models.Model):
 
     def __str__(self):
         return self.title 
+
+
