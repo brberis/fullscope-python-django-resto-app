@@ -20,35 +20,6 @@ const Catering = () => {
     dispatch(serviceActions.loadServices());
   }, [dispatch, serviceAdded]);
 
-  // const positions = [
-  //   {
-  //     id: 1,
-  //     title: 'Back End Developer',
-  //     type: 'Full-time',
-  //     location: 'Remote',
-  //     department: 'Engineering',
-  //     closeDate: '2020-01-07',
-  //     closeDateFull: 'January 7, 2020',
-  //   },
-  //   {
-  //     id: 2,
-  //     title: 'Front End Developer',
-  //     type: 'Full-time',
-  //     location: 'Remote',
-  //     department: 'Engineering',
-  //     closeDate: '2020-01-07',
-  //     closeDateFull: 'January 7, 2020',
-  //   },
-  //   {
-  //     id: 3,
-  //     title: 'User Interface Designer',
-  //     type: 'Full-time',
-  //     location: 'Remote',
-  //     department: 'Design',
-  //     closeDate: '2020-01-14',
-  //     closeDateFull: 'January 14, 2020',
-  //   },
-  // ]
 
   // if (typeof window !== 'undefined' && !loading && !isAuthenticated) {
   //   router.push('/login');
@@ -88,7 +59,7 @@ const Catering = () => {
                     <div className="sm:flex">
                       <p className="flex items-center text-sm text-gray-500">
                         <UsersIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                        {/* {cater.team} */}
+                        {cater.number_of_guests}
                       </p>
                       <p className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6">
                         <MapPinIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
@@ -96,6 +67,11 @@ const Catering = () => {
                       </p>
                     </div>
                     <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                      <p className="mt-2 mr-10 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6">
+                        <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${ cater.status === 'Confirmed' ?  ' bg-green-100 text-green-800' : ' bg-gray-100 text-grey'}`} >
+                          {cater.status}
+                        </span>                        
+                      </p>
                       <CalendarIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                       <p>
                         <time dateTime={cater.event.event_date}>{dateToReadableFormat(cater.event.event_date)}</time>

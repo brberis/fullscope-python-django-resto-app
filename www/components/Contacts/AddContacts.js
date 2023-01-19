@@ -22,7 +22,9 @@ export default function AddContact(props) {
       last_name: e.target.last_name.value,
       phone: e.target.phone.value,
       email: e.target.email.value,
-      company: e.target.company.value,
+      company: {
+        company_name: e.target.company_name.value,
+      },
       address: e.target.address.value,
       city: e.target.city.value,
       state: e.target.state.value,
@@ -113,7 +115,6 @@ export default function AddContact(props) {
                                 id="phone"
                                 name="phone"
                                 type="text"
-                                required
                                 className="form-input block w-full py-2 px-3 rounded-md leading-5 transition duration-150 ease-in-out"
                               />
                             </div>
@@ -130,22 +131,21 @@ export default function AddContact(props) {
                                 id="email"
                                 name="email"
                                 type="email"
-                                required
                                 className="form-input block w-full py-2 px-3 rounded-md leading-5 transition duration-150 ease-in-out"
                               />
                             </div>
                           </div>
                           <div className="col-span-6 ">
                           <label
-                            htmlFor="company"
+                            htmlFor="company_name"
                             className="block text-sm font-medium leading-5 text-gray-700"
                           >
                             Company
                           </label>
                           <div className="mt-1 rounded-md shadow-sm">
                             <input
-                              id="company"
-                              name="company"
+                              id="company_name"
+                              name="company_name"
                               type="text"
                               required
                               className="form-input block w-full py-2 px-3 rounded-md leading-5 transition duration-150 ease-in-out"
@@ -164,7 +164,6 @@ export default function AddContact(props) {
                                 id="address"
                                 name="address"
                                 type="text"
-                                required
                                 className="form-input block w-full py-2 px-3 rounded-md leading-5 transition duration-150 ease-in-out"
                               />
                             </div>
@@ -181,7 +180,6 @@ export default function AddContact(props) {
                                 id="city"
                                 name="city"
                                 type="text"
-                                required
                                 className="form-input block w-full py-2 px-3 rounded-md leading-5 transition duration-150 ease-in-out"
                               />
                             </div>
@@ -198,7 +196,6 @@ export default function AddContact(props) {
                               id="state"
                               name="state"
                               type="text"
-                              required
                               className="form-input block w-full py-2 px-3 rounded-md leading-5 transition duration-150 ease-in-out"
                             />
                             </div>
@@ -215,7 +212,6 @@ export default function AddContact(props) {
                                 id="zip_code"
                                 name="zip_code"
                                 type="text"
-                                required
                                 className="form-input block w-full py-2 px-3 rounded-md leading-5 transition duration-150 ease-in-out"
                               />
                             </div>
