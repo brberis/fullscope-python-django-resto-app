@@ -40,8 +40,9 @@ class CompanySerializer(serializers.ModelSerializer):
             "phone",
             "webpage"            
         )
+
 class PersonSerializer(serializers.ModelSerializer):
-    company = CompanySerializer(read_only=True)
+    company = CompanySerializer()
     class Meta:
         model = contact_models.Person
 
@@ -57,6 +58,13 @@ class PersonSerializer(serializers.ModelSerializer):
             "zip_code",
             "user"
         )
+
+    ## To create person object with nested company.
+    def create(self, validated_data):
+        company_data = validated_data.pop("company")
+        company = CompanySerializer.create(CompanySerializer(), validated_data=company_data)
+        person = contact_models.Person.objects.create(company=company, **validated_data)
+        return person
 
 ## Events
 class EventCategorySerializer(serializers.ModelSerializer):

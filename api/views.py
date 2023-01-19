@@ -107,6 +107,26 @@ class ContactSearchView(APIView):
         results = [{'id': hit.meta.id, **hit.to_dict()} for hit in response.hits]
         return Response(results)
 
+class ContactViewSet(viewsets.ModelViewSet):
+    queryset = contact_models.Person.objects.all()
+    serializer_class = serializers.PersonSerializer
+
+    def create(self, request, *args, **kwargs):
+        with transaction.atomic():
+            print(request.data)
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            print("ERROR", serializer.errors)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
 
 class LoadUserView(APIView):
     def get(self, request, format=None):

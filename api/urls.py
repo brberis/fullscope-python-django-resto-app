@@ -13,7 +13,7 @@ urlpatterns = [
     path('api-v1/token/verify/', TokenVerifyView.as_view()),
     path('api-v1/account/register', views.RegisterView.as_view()),
     path('api-v1/account/user', views.LoadUserView.as_view()),
-    path('api-v1/contacts', views.ServiceViewSet.as_view({'get': 'list'})),
+    path('api-v1/contacts', views.ContactViewSet.as_view({'get': 'list', 'post': 'create'})),
     path('api-v1/events', views.event_list),
     path('api-v1/events/<int:pk>/', views.event_detail),
     path('api-v1/event-categories', views.EventCatViewSet.as_view({'get': 'list'}), name='event-list'),
