@@ -35,7 +35,15 @@ export default function Calendar() {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const user = useSelector(state => state.auth.user);
   const events = useSelector(state => state.events);
+  const loading = useSelector(state => state.auth.loading);
+  
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/login');
+    }
+  }, [isAuthenticated, router]);
 
   useEffect( () => {
     setDays(eventCalendarData(currentMonthDate, events.events));
@@ -94,12 +102,6 @@ export default function Calendar() {
       }
     }
     setDays(days);
-  }
-
-  const loading = useSelector(state => state.auth.loading);
-
-  if (typeof window !== 'undefined' && !loading && !isAuthenticated) {
-    router.push('/login');
   }
 
   
