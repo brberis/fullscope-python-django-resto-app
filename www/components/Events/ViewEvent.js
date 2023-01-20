@@ -52,8 +52,8 @@ export default function ViewEvent(props) {
                 <div>
                   <div className="overflow-hidden bg-white shadow sm:rounded-lg">
                     <div className="px-4 py-5 sm:px-6">
-                      <h3 className="text-lg font-medium leading-6 text-gray-900">Event Information</h3>
-                      <p className="mt-1 max-w-2xl text-sm text-gray-500">{event?.title}</p>
+                      <h3 className="text-lg font-medium leading-6 text-gray-900">{event?.title}</h3>
+                      <p className="mt-1 max-w-2xl text-sm text-gray-500">{event?.description}</p>
                     </div>
                     <div className="border-t border-gray-200">
                       <dl>
@@ -63,7 +63,7 @@ export default function ViewEvent(props) {
                         </div>
                         <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                           <dt className="text-sm font-medium text-gray-500">Category</dt>
-                          <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{event?.category}</dd>
+                          <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{event?.category.name}</dd>
                         </div>
                         <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                           <dt className="text-sm font-medium text-gray-500">Start Time</dt>

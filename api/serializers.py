@@ -75,6 +75,7 @@ class EventCategorySerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = event_models.Event
+        depth=2
         fields = (
             "id",
             "title",
