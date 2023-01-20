@@ -20,7 +20,7 @@ const NEXT_API_URL = process.env.API_HOST || '';
 
 export const load_user = () => async dispatch => {
   try {
-    const res = await fetch(`${NEXT_API_URL}/api-v1/account/user`, {
+    const res = await fetch(`${NEXT_API_URL}/api/account/user`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -48,7 +48,7 @@ export const load_user = () => async dispatch => {
 
 export const check_auth_status = () => async dispatch => {
   try {
-    const res = await fetch(`${NEXT_API_URL}/api-v1/token/verify`, {
+    const res = await fetch(`${NEXT_API_URL}/api/account/verify`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -76,7 +76,7 @@ export const check_auth_status = () => async dispatch => {
 
 export const request_refresh = () => async dispatch => {
   try {
-    const res = await fetch(`${NEXT_API_URL}/api-v1/token/refresh`, {
+    const res = await fetch(`${NEXT_API_URL}/api/account/refresh`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
