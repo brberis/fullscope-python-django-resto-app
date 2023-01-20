@@ -6,6 +6,7 @@ import { CalendarIcon, MapPinIcon, UsersIcon } from '@heroicons/react/20/solid'
 import * as serviceActions from '../../actions/services';
 import { dateToReadableFormat } from '../../utils/helpers';
 import AddService from '../../components/Services/AddService';
+
 const Catering = () => {
   const [isOpenAddService, setIsOpenAddService] = useState(false);
   const router = useRouter();
@@ -14,6 +15,12 @@ const Catering = () => {
   const cateringList = useSelector(state => state.services.services);
   const dispatch = useDispatch();
   const [serviceAdded, setServiceAdded] = useState(null);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/login');
+    }
+  }, [isAuthenticated, router]);
 
   // render events in calendar
   useEffect( () => {
@@ -28,10 +35,6 @@ const Catering = () => {
   const handleClose = () => {
     setIsOpenAddService(false);
     // setIsOpenViewEvent(false);
-  }
-
-  if (typeof window !== 'undefined' && !loading && !isAuthenticated) {
-    router.push('/login');
   }
 
   if (!cateringList) {
