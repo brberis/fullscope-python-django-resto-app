@@ -99,7 +99,7 @@ export default function Calendar() {
   const loading = useSelector(state => state.auth.loading);
 
   if (typeof window !== 'undefined' && !loading && !isAuthenticated) {
-    // router.push('/login');
+    router.push('/login');
   }
 
   
