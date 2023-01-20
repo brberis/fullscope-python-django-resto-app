@@ -39,11 +39,11 @@ export default function Calendar() {
   
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/login');
-    }
-  }, [isAuthenticated, router]);
+//   useEffect(() => {
+//     if (!isAuthenticated) {
+//       router.push('/login');
+//     }
+//   }, [isAuthenticated, router]);
 
   useEffect( () => {
     setDays(eventCalendarData(currentMonthDate, events.events));

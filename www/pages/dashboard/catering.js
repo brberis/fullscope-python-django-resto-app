@@ -16,11 +16,11 @@ const Catering = () => {
   const dispatch = useDispatch();
   const [serviceAdded, setServiceAdded] = useState(null);
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/login');
-    }
-  }, [isAuthenticated, router]);
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     router.push('/login');
+  //   }
+  // }, [isAuthenticated, router]);
 
   // render events in calendar
   useEffect( () => {
