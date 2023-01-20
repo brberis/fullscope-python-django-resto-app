@@ -21,10 +21,6 @@ const Catering = () => {
   }, [dispatch, serviceAdded]);
 
 
-  // if (typeof window !== 'undefined' && !loading && !isAuthenticated) {
-  //   router.push('/login');
-  // }
-
   const incomingAction = (incomingActionFromParent)=> {
     setIsOpenAddService(incomingActionFromParent);
   }
@@ -32,6 +28,10 @@ const Catering = () => {
   const handleClose = () => {
     setIsOpenAddService(false);
     // setIsOpenViewEvent(false);
+  }
+
+  if (typeof window !== 'undefined' && !loading && !isAuthenticated) {
+    router.push('/login');
   }
 
   if (!cateringList) {

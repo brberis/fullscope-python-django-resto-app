@@ -7,7 +7,7 @@
 
 ## Description
 
-This project under development is a web application for managing a restaurant and catering company. It is built using a combination of technologies including Django, Next.js, REST API, React Redux, MySQL, JWT authentication, and Tailwind CSS. The application is deployed on DigitalOcean Droplet using NodeJs, NGINX and Gunicorn.
+This project under development is a web application for managing a restaurant and catering company. It is built using a combination of technologies including Django, Next.js, REST API, React Redux, MySQL, JWT authentication, ElasticSearch and Tailwind CSS. The application is deployed on DigitalOcean Droplet using NodeJs, NGINX and Gunicorn.
 
 
 The application includes several features to aid in managing the business, such as:
@@ -73,8 +73,9 @@ Create front and backend .env files.
 
 ## Features
 
-- JSON Web Token (JWT) authentication and authorization
+-  JSON Web Token (JWT) authentication and authorization
 -  Django server serving as a REST API and JWT issuer/verifier
+-  ElasticSearch server to improve performance in UI auto-fill fields using large data-sets.
 -  Next.js frontend consuming the API and using JWT for authentication/authorization
 -  User registration and login functionality
 -  Secure password hashing and storage

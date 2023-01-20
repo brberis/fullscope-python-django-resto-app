@@ -1,5 +1,4 @@
 import cookie from 'cookie';
-// import { NextApiRequest, NextApiResponse } from 'next';
 
 const API_URL = process.env.NEXT_PUBLIC_API_HOST;
 
