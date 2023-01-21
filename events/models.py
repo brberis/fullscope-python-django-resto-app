@@ -6,6 +6,17 @@ STATUS = (
     ('Closed', 'Closed')
 )
 
+CATEGORIES = (
+    ('Catering', 'Catering'),
+    ('Other Services', 'Other Service'),
+    ('PayRoll', 'PayRoll'),
+    ('Production', 'Production'),
+    ('Others', 'Others'),
+    
+
+)
+
+
 
 class EventCategory(models.Model):
     name = models.CharField(max_length=150, verbose_name=('Name'))
@@ -24,7 +35,7 @@ class EventCategory(models.Model):
 class Event(models.Model):
     title = models.CharField(max_length=250)
     description = models.TextField(default='', blank=True)
-    category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
+    category = models.CharField(choices=CATEGORIES, default='Other Services', max_length=50)
     status = models.CharField(choices=STATUS, default='Open', max_length=50)
     event_date = models.DateField()
     start_time = models.TimeField()

@@ -13,6 +13,11 @@ STATUS = (
     ('Cancelled', 'Cancelled')
 )
 
+CATEGORIES = (
+    ('Catering', 'Catering'),
+    ('Other Services', 'Other Service'),
+)
+
 class Type(models.Model):
     name = models.CharField(max_length=150, verbose_name=('Name'), null=True, blank=True)
 
@@ -24,7 +29,7 @@ class Service(models.Model):
     contact = models.ForeignKey(Person, null=True, on_delete=models.SET_NULL)
     location = models.CharField(max_length=250, blank=True, null=True)
     description = models.TextField(default='', blank=True)
-    type = models.ForeignKey(Type, related_name='service_type', on_delete=models.PROTECT )
+    type = models.CharField(choices=CATEGORIES, default='Catering', max_length=50)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     status = models.CharField(choices=STATUS, default='Unconfirmed', max_length=50)
     number_of_guests = models.IntegerField(default=10, null=False)

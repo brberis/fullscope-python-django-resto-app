@@ -156,7 +156,10 @@ export default function AddEvent(props) {
                                   autoComplete="category-name"
                                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 >
-                                  { categories?.map( cat => <option key={ cat.id } value={ cat.id }>{ cat.name }</option>)}
+                                  <option  value="Others">Others</option>
+                                  <option  value="PayRoll">PayRoll</option>
+                                  <option  value="PayRoll">Production</option>
+                                  <option  value="PayRoll">PayRoll</option>
                                 </select>
                               </div>
                             </div>

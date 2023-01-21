@@ -103,15 +103,15 @@ export default function AddService(props) {
       description: e.target.description.value,
       type: e.target.type.value,
       event: {
-      title: e.target.title.value,
-      description: e.target.description.value,
-      category: 1,
-      event_date: selected.toISOString().split('T')[0],
-      "start_time": timeTo24hours(`
-      ${e.target.startHour.value}:${e.target.startMinutes.value} ${e.target.startHalves.value}`), 
-      "end_time": timeTo24hours(`
-      ${e.target.endHour.value}:${e.target.endMinutes.value} ${e.target.endHalves.value}`),
-      "place": e.target.location.value,
+        title: e.target.title.value,
+        description: e.target.description.value,
+        category: e.target.type.value,
+        event_date: selected.toISOString().split('T')[0],
+        "start_time": timeTo24hours(`
+        ${e.target.startHour.value}:${e.target.startMinutes.value} ${e.target.startHalves.value}`), 
+        "end_time": timeTo24hours(`
+        ${e.target.endHour.value}:${e.target.endMinutes.value} ${e.target.endHalves.value}`),
+        "place": e.target.location.value,
       }
     };
   
@@ -260,11 +260,17 @@ export default function AddService(props) {
                                       required
                                       className="form-select block w-full py-2 px-3 rounded-md leading-5 transition duration-150 ease-in-out"
                                     >
-                                      {types?.map((type) => (
-                                        <option key={type.id} value={type.id}>
+                                      {/* FUTURE {types?.map((type) => (
+                                        <option key={type.id} value={type.name}>
                                           {type.name}
                                         </option>
-                                      ))}
+                                      ))} */}
+                                      <option value="Catering">
+                                        Catering
+                                      </option>
+                                      <option value="Other Services">
+                                        Other Services
+                                      </option>                                    
                                     </select>
                                   </div>
                                 </div>
