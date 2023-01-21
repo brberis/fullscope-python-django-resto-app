@@ -1,12 +1,12 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import { useRouter } from 'next/router';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Link from "next/link";
 import { UserIcon } from '@heroicons/react/20/solid'
 import { useDispatch, useSelector } from 'react-redux';
-
-import { logout } from '../actions/auth';
+import { logout, check_auth_status } from '../actions/auth';
+import Router from 'next/router';
 
 const navigation = [
   { name: 'Ping', href: '/ping', current: false },
@@ -27,10 +27,13 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const router = useRouter();
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const user = useSelector(state => state.auth.user);
   const loading = useSelector(state => state.auth.loading);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(check_auth_status());
+  }, [dispatch]);
 
   const logoutHandler = () => {
     if (dispatch && dispatch !== null && dispatch !== undefined) {
@@ -38,9 +41,14 @@ export default function Navbar() {
     }
   };
   
-  if (typeof window !== 'undefined' && !loading && !isAuthenticated && router.pathname === '/dashboard') {
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+
+
+  if (typeof window !== 'undefined' && !loading && !isAuthenticated && router.pathname.startsWith('/dashboard')) {
+    console.log('loading', loading, 'isAuthenticated', isAuthenticated, 'router.pathname.startsWith(/dashboard', router.pathname.startsWith('/dashboard'));
     router.push('/login');
   }
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -195,14 +203,15 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pt-2 pb-3">
               {navigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
                   as="a"
-                  href={item.href}
+                  onClick={() => {
+                    Router.push(item.href);
+                  }}
                   className={classNames(
                     item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                     'block px-3 py-2 rounded-md text-base font-medium'
@@ -216,7 +225,9 @@ export default function Navbar() {
                 <Disclosure.Button
                   key={item.name}
                   as="a"
-                  href={item.href}
+                  onClick={() => {
+                    Router.push(item.href);
+                  }}
                   className={classNames(
                     item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                     'block px-3 py-2 rounded-md text-base font-medium'

@@ -83,7 +83,6 @@ const createUrl = (urlSection) => API_URL + urlSection;
       });
   
       const data = await res.json();
-      console.log('DATA', data);
   
       if (res.status === 200) {
         dispatch({

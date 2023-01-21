@@ -57,7 +57,6 @@ const createUrl = (urlSection) => API_URL + urlSection;
       const data = await res.json();
   
       if (res.status === 200) {
-        console.log('SERVICE_DATA', data);
         dispatch({
           type: LOAD_SERVICES_SUCCESS,
           payload: data,

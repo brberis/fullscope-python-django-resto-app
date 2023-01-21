@@ -26,7 +26,6 @@ export const loadContacts = () => async dispatch => {
       });
       const data = await res.json();
       if (res.status === 200) {
-          console.log('CONTACT_DATA', data);
           dispatch({
               type: LOAD_CONTACTS_SUCCESS,
               payload: data,

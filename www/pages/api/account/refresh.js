@@ -1,6 +1,5 @@
 import cookie from 'cookie';
 // import { API_URL } from '../../../config/index';
-
 const API_URL = process.env.NEXT_PUBLIC_API_HOST;
 const refresh = async (req, res) => {
   if (req.method === 'GET') {
@@ -29,6 +28,7 @@ const refresh = async (req, res) => {
       const data = await apiRes.json();
 
       if (apiRes.status === 200) {
+        
         res.setHeader('Set-Cookie', [
           cookie.serialize('access', data.access, {
             httpOnly: true,

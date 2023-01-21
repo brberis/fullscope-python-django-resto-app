@@ -4,6 +4,7 @@ import cookie from 'cookie';
 const API_URL = process.env.NEXT_PUBLIC_API_HOST;
 
 const verify = async (req, res) => {
+
   if (req.method === 'GET') {
     const cookies = cookie.parse(req.headers.cookie ?? '');
     const access = cookies.access ?? false;
@@ -17,7 +18,6 @@ const verify = async (req, res) => {
     const body = JSON.stringify({
       token: access,
     });
-
     try {
       const apiRes = await fetch(`${API_URL}/api-v1/token/verify/`, {
         method: 'POST',

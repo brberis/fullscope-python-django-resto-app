@@ -36,14 +36,7 @@ export default function Calendar() {
   const user = useSelector(state => state.auth.user);
   const events = useSelector(state => state.events);
   const loading = useSelector(state => state.auth.loading);
-  
   const dispatch = useDispatch();
-
-//   useEffect(() => {
-//     if (!isAuthenticated) {
-//       router.push('/login');
-//     }
-//   }, [isAuthenticated, router]);
 
   useEffect( () => {
     setDays(eventCalendarData(currentMonthDate, events.events));
@@ -79,10 +72,6 @@ export default function Calendar() {
     setIsOpenViewEvent(false);
     setEventAdded(result);
   }
-  
-  // useEffect( () => {
-  //   setSelectedDay(days.find((day) => day.isSelected));
-  // }, [days]);
 
   // render events in calendar
   useEffect( () => {

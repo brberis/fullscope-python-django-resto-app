@@ -3,7 +3,6 @@ import cookie from 'cookie';
 
 const API_URL = process.env.NEXT_PUBLIC_API_HOST;
 
-
 const user = async (req, res) => {
   if (req.method === 'GET') {
     const cookies = cookie.parse(req.headers.cookie ?? '');

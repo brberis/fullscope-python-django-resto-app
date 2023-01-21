@@ -51,7 +51,6 @@ export default function AddService(props) {
   }, [dispatch]);
 
   useEffect( () => {
-    console.log(currentContact);;
   }, [currentContact]);
 
 
@@ -122,7 +121,6 @@ export default function AddService(props) {
   
     handleClose(newService)
   }
-    console.log('TYPES', types);
 
   return (
     <Transition.Root show={open} as={Fragment}>

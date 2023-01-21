@@ -16,11 +16,7 @@ const Catering = () => {
   const dispatch = useDispatch();
   const [serviceAdded, setServiceAdded] = useState(null);
 
-  // useEffect(() => {
-  //   if (!isAuthenticated) {
-  //     router.push('/login');
-  //   }
-  // }, [isAuthenticated, router]);
+
 
   // render events in calendar
   useEffect( () => {
@@ -34,13 +30,13 @@ const Catering = () => {
 
   const handleClose = () => {
     setIsOpenAddService(false);
-    // setIsOpenViewEvent(false);
   }
 
   if (!cateringList) {
     return <div>Loading...</div>
   }
 
+  
   return (
     <Layout sectionTitle={'Catering Events'} incomingAction={incomingAction} action={'Add Catering'} breadcrumbs={['Dashboard', 'Catering Events']} >
       <div className="overflow-hidden bg-white shadow sm:rounded-md">

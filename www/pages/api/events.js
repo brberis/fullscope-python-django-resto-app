@@ -5,14 +5,15 @@ const API_URL = process.env.NEXT_PUBLIC_API_HOST;
 
 const events = async (req, res) => {
   if (req.method === 'GET') {
-    // const cookies = cookie.parse(req.headers.cookie ?? '');
-    // const access = cookies.access ?? false;
+    const cookies = cookie.parse(req.headers.cookie ?? '');
+    const access = cookies.access ?? false;
+    
 
-    // if (!access) {
-    //   return res.status(401).json({
-    //     error: 'User unauthorized to make this request',
-    //   });
-    // }
+    if (!access) {
+      return res.status(401).json({
+        error: 'User unauthorized to make this request',
+      });
+    }
 
     try {
       const apiRes = await fetch(`${API_URL}/api-v1/events`, {
@@ -25,7 +26,7 @@ const events = async (req, res) => {
       const data = await apiRes.json();
 
       if (apiRes.status === 200) {
-        return res.status(200).json({ user: data.user });
+        return res.status(200).json({ events: data.events });
       } else {
         return res.status(apiRes.status).json({ error: data.error });
       }
