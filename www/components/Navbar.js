@@ -7,9 +7,16 @@ import { UserIcon } from '@heroicons/react/20/solid'
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, check_auth_status } from '../actions/auth';
 import Router from 'next/router';
+import Image from 'next/image';
+import logo from '/public/tipsy-udder.png'
 
 const navigation = [
-  { name: 'Ping', href: '/ping', current: false },
+  { name: 'Home', href: '/home', current: false },
+  { name: 'Productos & Flavors', href: '/products-and-flavors', current: false },
+  { name: 'Specials', href: '/specials', current: false },
+  { name: 'Catering Services', href: '/catering-services', current: false },
+  { name: 'About Us', href: '/about-us', current: false },
+  { name: 'Contact Us', href: '/contact-us', current: false }
 ]
 const authNavigation = [
   { name: 'Inventory', href: '/dashboard/inventory', current: false },
@@ -50,7 +57,7 @@ export default function Navbar() {
   }
 
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className="bg-cyan-800">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -68,18 +75,22 @@ export default function Navbar() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="block h-8 w-auto lg:hidden"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                    alt="Your Company"
+                  <Image
+                    className="block h-12 w-auto lg:hidden"
+                    src={logo}
+                    width={300}
+                    height={170}
+                    alt="Tipsy Udder"
                   />
-                  <img
-                    className="hidden h-8 w-auto lg:block"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                    alt="Your Company"
+                  <Image
+                    className="hidden  h-13 w-auto lg:block"
+                    src={logo}
+                    width={300}
+                    height={170}
+                    alt="Tipsy Udder"
                   />
                 </div>
-                <div className="hidden sm:ml-6 sm:block">
+                <div className="hidden sm:ml-6 sm:block mt-6">
                   <div className="flex space-x-4">
 
                     {isAuthenticated ? (
@@ -101,7 +112,7 @@ export default function Navbar() {
                     ) : null}
 
                     <>
-                      {navigation.map((item) => (
+                      {!isAuthenticated ? navigation.map((item) => (
                         <Link href={item.href}
                             key={item.name}
                             className={classNames(
@@ -112,7 +123,7 @@ export default function Navbar() {
                           >
                             {item.name}
                         </Link>
-                      ))}
+                      )): null}
                     </>
                     
                   </div>
@@ -124,7 +135,7 @@ export default function Navbar() {
                   <Link href="/login">
                     <button
                       type="button"
-                      className="relative inline-flex items-center rounded-md border border-transparent bg-indigo-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                      className="relative inline-flex items-center rounded-md border border-transparent bg-sky-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800"
                     >
                       <UserIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
                       <span>Login</span>
@@ -205,7 +216,7 @@ export default function Navbar() {
           </div>
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pt-2 pb-3">
-              {navigation.map((item) => (
+              {!isAuthenticated ? navigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
                   as="a"
@@ -220,7 +231,7 @@ export default function Navbar() {
                 >
                   {item.name}
                 </Disclosure.Button>
-              ))}
+              )): null}
               {isAuthenticated ? authNavigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
