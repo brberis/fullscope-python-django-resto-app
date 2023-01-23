@@ -57,7 +57,7 @@ export default function Navbar() {
   }
 
   return (
-    <Disclosure as="nav" className="bg-cyan-800">
+    <Disclosure as="nav" className="bg-gray-700">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -78,15 +78,15 @@ export default function Navbar() {
                   <Image
                     className="block h-12 w-auto lg:hidden"
                     src={logo}
-                    width={300}
+                    width={200}
                     height={170}
                     alt="Tipsy Udder"
                   />
                   <Image
-                    className="hidden  h-13 w-auto lg:block"
+                    className="hidden   lg:block"
                     src={logo}
                     width={300}
-                    height={170}
+                    height={100}
                     alt="Tipsy Udder"
                   />
                 </div>

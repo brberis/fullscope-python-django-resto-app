@@ -1,5 +1,9 @@
 import { ChevronRightIcon, StarIcon } from '@heroicons/react/20/solid'
-import Layout from "../components/Layout";
+import Layout from '../components/Layout';
+import Image from 'next/image';
+import iceCream from '../public/ice-cream-red-bg.jpeg';
+import ingredients from '../public/ice-cream-ingredients.png';
+import iphone from '../public/iphone.png';
 
 const stats = [
   { label: 'Founded', value: '2021' },
@@ -113,16 +117,21 @@ export default function Example() {
                 </div> */}
                 <div className="mt-6 sm:max-w-xl">
                   <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-                    Issue management for growing teams
+                    Where every scoop is a little bit tipsy
                   </h1>
                   <p className="mt-6 text-xl text-gray-500">
-                    Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.
+                    At Tipsy Udder, we have been serving delicious handcrafted ice cream since 2016 in Bonita Springs, Florida. 
+                    Our menu includes a variety of both alcohol-infused and non-alcohol infused ice cream flavors, 
+                    all made in-house with the freshest ingredients.  
+                    <br />
+                    <br />
+                    Come visit us and see why we're the best ice cream shop in South West Florida!
                   </p>
                 </div>
                 <form action="#" className="mt-12 sm:flex sm:w-full sm:max-w-lg">
                   <div className="min-w-0 flex-1">
                     <label htmlFor="hero-email" className="sr-only">
-                      Email address
+                      Enter your email
                     </label>
                     <input
                       id="hero-email"
@@ -136,22 +145,27 @@ export default function Example() {
                       type="submit"
                       className="block w-full rounded-md border border-transparent bg-rose-500 px-5 py-3 text-base font-medium text-white shadow hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:px-10"
                     >
-                      Notify me
+                      Subscribe
                     </button>
                   </div>
                 </form>
+                <p className='text-gray-500'>* And receive exclusive promotions and discounts.</p>
+
                 <div className="mt-6">
                   <div className="inline-flex items-center divide-x divide-gray-300">
                     <div className="flex flex-shrink-0 pr-5">
-                      <StarIcon className="h-5 w-5 text-yellow-400" aria-hidden="true" />
-                      <StarIcon className="h-5 w-5 text-yellow-400" aria-hidden="true" />
-                      <StarIcon className="h-5 w-5 text-yellow-400" aria-hidden="true" />
-                      <StarIcon className="h-5 w-5 text-yellow-400" aria-hidden="true" />
-                      <StarIcon className="h-5 w-5 text-yellow-400" aria-hidden="true" />
+                      <StarIcon className="h-5 w-5 text-red-600" aria-hidden="true" />
+                      <StarIcon className="h-5 w-5 text-red-600" aria-hidden="true" />
+                      <StarIcon className="h-5 w-5 text-red-600" aria-hidden="true" />
+                      <StarIcon className="h-5 w-5 text-red-600" aria-hidden="true" />
+                      <StarIcon className="h-5 w-5 text-red-600" aria-hidden="true" />
                     </div>
                     <div className="min-w-0 flex-1 py-1 pl-5 text-sm text-gray-500 sm:py-3">
-                      <span className="font-medium text-gray-900">Rated 5 stars</span> by over{' '}
-                      <span className="font-medium text-rose-500">500 beta users</span>
+                      <span className="font-medium text-gray-900">Rated 5 stars</span> on{' '}
+                      <span className="font-medium text-rose-500"> most major review websites </span>
+                      and proud to be known as one of the best ice cream shop in the area.
+
+                      
                     </div>
                   </div>
                 </div>
@@ -186,9 +200,9 @@ export default function Example() {
                 </svg>
               </div>
               <div className="relative -mr-40 pl-6 sm:mx-auto sm:max-w-3xl sm:px-0 lg:h-full lg:max-w-none lg:pl-12">
-                <img
+                <Image
                   className="w-full rounded-md shadow-xl ring-1 ring-black ring-opacity-5 lg:h-full lg:w-auto lg:max-w-none"
-                  src="https://tailwindui.com/img/component-images/task-app-rose.jpg"
+                  src={iceCream}
                   alt=""
                 />
               </div>
@@ -227,42 +241,12 @@ export default function Example() {
               <div className="relative mx-auto max-w-md px-6 sm:max-w-3xl lg:max-w-none lg:px-0 lg:py-20">
                 {/* Testimonial card*/}
                 <div className="relative overflow-hidden rounded-2xl pt-64 pb-10 shadow-xl">
-                  <img
+                  <Image
                     className="absolute inset-0 h-full w-full object-cover"
-                    src="https://images.unsplash.com/photo-1521510895919-46920266ddb3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&fp-x=0.5&fp-y=0.6&fp-z=3&width=1440&height=1440&sat=-100"
+                    src={ingredients}
                     alt=""
                   />
-                  <div className="absolute inset-0 bg-rose-500 mix-blend-multiply" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-rose-600 via-rose-600 opacity-90" />
-                  <div className="relative px-8">
-                    <div>
-                      <img
-                        className="h-12"
-                        src="https://tailwindui.com/img/logos/workcation.svg?color=white"
-                        alt="Workcation"
-                      />
-                    </div>
-                    <blockquote className="mt-8">
-                      <div className="relative text-lg font-medium text-white md:flex-grow">
-                        <svg
-                          className="absolute top-0 left-0 h-8 w-8 -translate-x-3 -translate-y-2 transform text-rose-400"
-                          fill="currentColor"
-                          viewBox="0 0 32 32"
-                          aria-hidden="true"
-                        >
-                          <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
-                        </svg>
-                        <p className="relative">
-                          Tincidunt integer commodo, cursus etiam aliquam neque, et. Consectetur pretium in volutpat,
-                          diam. Montes, magna cursus nulla feugiat dignissim id lobortis amet.
-                        </p>
-                      </div>
 
-                      <footer className="mt-4">
-                        <p className="text-base font-semibold text-rose-200">Sarah Williams, CEO at Workcation</p>
-                      </footer>
-                    </blockquote>
-                  </div>
                 </div>
               </div>
             </div>
@@ -271,42 +255,21 @@ export default function Example() {
               {/* Content area */}
               <div className="pt-12 sm:pt-16 lg:pt-20">
                 <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                  On a mission to empower teams
+                  <span className="text-rose-500">Uncompromising Quality:</span> The Secret Ingredient in Every Scoop of our Handcrafted Ice Cream
                 </h2>
                 <div className="mt-6 space-y-6 text-gray-500">
                   <p className="text-lg">
-                    Sagittis scelerisque nulla cursus in enim consectetur quam. Dictum urna sed consectetur neque
-                    tristique pellentesque. Blandit amet, sed aenean erat arcu morbi. Cursus faucibus nunc nisl netus
-                    morbi vel porttitor vitae ut. Amet vitae fames senectus vitae.
+                    At Tipsy Udder Ice Cream Shop, we believe that the quality of our ingredients is of the utmost importance.
+                    That's why we go to great lengths to source only the finest and freshest ingredients for our homemade recipes. 
+                    We don't add any preservatives or artificial colorants to our ice cream, ensuring that every scoop you enjoy 
+                    is not only delicious, but also natural and healthy.
                   </p>
                   <p className="text-base leading-7">
-                    Sollicitudin tristique eros erat odio sed vitae, consequat turpis elementum. Lorem nibh vel, eget
-                    pretium arcu vitae. Eros eu viverra donec ut volutpat donec laoreet quam urna. Sollicitudin
-                    tristique eros erat odio sed vitae, consequat turpis elementum. Lorem nibh vel, eget pretium arcu
-                    vitae. Eros eu viverra donec ut volutpat donec laoreet quam urna.
+                  Our commitment to quality doesn't stop there, we also strive to make sure that every customer feels welcome 
+                  and satisfied with the service and atmosphere in our shop. We are passionate about ice cream and passionate 
+                  about making our customers happy. We invite you to come and taste the difference that homemade ice cream made 
+                  with the best ingredients makes.
                   </p>
-                  <p className="text-base leading-7">
-                    Rhoncus nisl, libero egestas diam fermentum dui. At quis tincidunt vel ultricies. Vulputate aliquet
-                    velit faucibus semper. Pellentesque in venenatis vestibulum consectetur nibh id. In id ut tempus
-                    egestas. Enim sit aliquam nec, a. Morbi enim fermentum lacus in. Viverra.
-                  </p>
-                </div>
-              </div>
-
-              {/* Stats section */}
-              <div className="mt-10">
-                <dl className="grid grid-cols-2 gap-x-4 gap-y-8">
-                  {stats.map((stat) => (
-                    <div key={stat.label} className="border-t-2 border-gray-100 pt-6">
-                      <dt className="text-base font-medium text-gray-500">{stat.label}</dt>
-                      <dd className="text-3xl font-bold tracking-tight text-gray-900">{stat.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-                <div className="mt-10">
-                  <a href="#" className="text-base font-medium text-rose-500">
-                    Learn more about how we're changing the world &rarr;
-                  </a>
                 </div>
               </div>
             </div>
@@ -319,25 +282,26 @@ export default function Example() {
             <div className="lg:grid lg:grid-cols-2 lg:items-center lg:gap-24">
               <div>
                 <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                  Backed by world-renowned investors
+                  Visit Our Conveniently Located Shop in Bonita Springs
                 </h2>
                 <p className="mt-6 max-w-3xl text-lg leading-7 text-gray-500">
-                  Sagittis scelerisque nulla cursus in enim consectetur quam. Dictum urna sed consectetur neque
-                  tristique pellentesque. Blandit amet, sed aenean erat arcu morbi. Cursus faucibus nunc nisl netus
-                  morbi vel porttitor vitae ut. Amet vitae fames senectus vitae.
+                  Tipsy Udder Ice Cream Shop is located in the heart of Bonita Springs, Florida. 
+                  Our convenient location makes it easy for customers to stop by and enjoy a delicious 
+                  scoop of homemade ice cream. Whether you're a local resident or just visiting the area, 
+                  you'll find us easily accessible from major roads and highways. Our shop is located 
+                  in a vibrant area, surrounded by shops, restaurants, and a theater. 
+                  Take a break from your day and come visit us for a taste of our unique and delicious 
+                  ice cream. We're always ready to welcome you with a smile and a cold scoop of your 
+                  favorite flavor.
                 </p>
                 <div className="mt-6">
                   <a href="#" className="text-base font-medium text-rose-500">
-                    Meet our investors and advisors &rarr;
+                    Visit or contact us &rarr;
                   </a>
                 </div>
               </div>
               <div className="mt-12 grid grid-cols-2 gap-0.5 md:grid-cols-3 lg:mt-0 lg:grid-cols-2">
-                {logos.map((logo) => (
-                  <div key={logo.name} className="col-span-1 flex justify-center bg-gray-50 py-8 px-8">
-                    <img className="max-h-12" src={logo.url} alt={logo.name} />
-                  </div>
-                ))}
+              <div class="mapouter"><div class="gmap-canvas"><iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=25261%20Chamber%20of%20Commerce%20Dr.&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><br /></div></div>
               </div>
             </div>
           </div>
@@ -388,34 +352,25 @@ export default function Example() {
               <div className="relative">
                 <div className="sm:text-center">
                   <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                    Get notified when we&rsquo;re launching.
+                    RECEIVE A BOGO
                   </h2>
+                  <h3 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                    Join our vip text club!.
+                  </h3>
                   <p className="mx-auto mt-6 max-w-2xl text-lg text-rose-100">
-                    Sagittis scelerisque nulla cursus in enim consectetur quam. Dictum urna sed consectetur neque
-                    tristique pellentesque.
+                    Text TIPSY to 22452.
                   </p>
+                  <div className='with'>
+                  <Image
+                    className="absolute inset-0 h-full w-full object-cover"
+                    src={iphone}
+                    width={200}
+                    alt=""
+                  />
+                  </div>
+               
                 </div>
-                <form action="#" className="mt-12 sm:mx-auto sm:flex sm:max-w-lg">
-                  <div className="min-w-0 flex-1">
-                    <label htmlFor="cta-email" className="sr-only">
-                      Email address
-                    </label>
-                    <input
-                      id="cta-email"
-                      type="email"
-                      className="block w-full rounded-md border border-transparent px-5 py-3 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-rose-500"
-                      placeholder="Enter your email"
-                    />
-                  </div>
-                  <div className="mt-4 sm:mt-0 sm:ml-3">
-                    <button
-                      type="submit"
-                      className="block w-full rounded-md border border-transparent bg-gray-900 px-5 py-3 text-base font-medium text-white shadow hover:bg-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-rose-500 sm:px-10"
-                    >
-                      Notify me
-                    </button>
-                  </div>
-                </form>
+\
               </div>
             </div>
           </div>
