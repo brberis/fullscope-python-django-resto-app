@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout, check_auth_status } from '../actions/auth';
 import Router from 'next/router';
 import Image from 'next/image';
-import logo from '/public/tipsy-udder.png'
+import logo from '/public/logo.png'
 
 const navigation = [
   { name: 'Home', href: '/home', current: false },
