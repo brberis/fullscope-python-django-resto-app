@@ -1,9 +1,6 @@
 import { ChevronRightIcon, StarIcon } from '@heroicons/react/20/solid'
 import Layout from '../components/Layout';
-import Image from 'next/image';
-import iceCream from '../public/ice-cream-red-bg.jpeg';
-import ingredients from '../public/ice-cream-ingredients.png';
-import bogo from '../public/bogo.jpg';
+
 
 const stats = [
   { label: 'Founded', value: '2021' },
