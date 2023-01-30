@@ -36,7 +36,7 @@ DEBUG = True
 # Find out what the IP addresses are at run time
 # This is necessary because otherwise Gunicorn will reject the connections
 def ip_addresses():
-    ip_list = ['tipsycreamery.com','127.0.0.1', 'localhost',  'corsheaders']
+    ip_list = ['127.0.0.1', 'localhost',  'corsheaders']
     for interface in netifaces.interfaces():
         addrs = netifaces.ifaddresses(interface)
         for x in (netifaces.AF_INET, netifaces.AF_INET6):

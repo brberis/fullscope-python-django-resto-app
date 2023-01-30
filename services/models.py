@@ -32,7 +32,7 @@ class Service(models.Model):
     type = models.CharField(choices=CATEGORIES, default='Catering', max_length=50)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     status = models.CharField(choices=STATUS, default='Unconfirmed', max_length=50)
-    number_of_guests = models.IntegerField(default=10, null=False)
+    number_of_guests = models.IntegerField(default=10, null=True, blank=True)
     products = models.ManyToManyField(Item, blank=True, null=True)
     team = models.ManyToManyField(Employee, blank=True, null=True)
     order = models.ForeignKey(Order, blank=True, null=True, on_delete=models.CASCADE)

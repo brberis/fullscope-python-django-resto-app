@@ -1,20 +1,11 @@
 import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { DayPicker } from 'react-day-picker';
-import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
-import * as serviceActions from '../../actions/services';
 import 'react-day-picker/dist/style.css';
 import {timeTo24hours} from '../../utils/helpers';
 import AsyncSelect from "react-select/async";
 import AddContact from '../../components/Contacts/AddContacts';
 
-const testBook = {
-  _id: "1",
-  title: "The Lord of the Rings",
-  authors: "J.R.R. Tolkien",
-  description: "A classic book",
-};
 
 export default function AddService(props) {
   const today = new Date();
@@ -27,11 +18,8 @@ export default function AddService(props) {
   const [endMinutes, setEndMinutes] = useState(0);
   const [startHalves, setStartHalves] = useState('AM');
   const [endHalves, setEndHalves] = useState('AM');
-  const dispatch = useDispatch();
-  const types = useSelector(state => state.services.serviceTypes);
 
   const [currentContact, setCurrentContact] = useState(null);
-  const [similarContacts, setSimilarContacts] = useState([]);
 
 
   // define a callback function that accepts a variable as an argument
@@ -46,9 +34,6 @@ export default function AddService(props) {
     setIsOpenAddContact(false);
   }
 
-  useEffect( () => {
-    dispatch(serviceActions.loadServiceTypes());
-  }, [dispatch]);
 
   useEffect( () => {
   }, [currentContact]);
@@ -102,6 +87,8 @@ export default function AddService(props) {
       location: e.target.location.value,
       description: e.target.description.value,
       type: e.target.type.value,
+      number_of_guests: e.target.guests.value,
+      status: e.target.status.value,
       event: {
         title: e.target.title.value,
         description: e.target.description.value,
@@ -115,9 +102,15 @@ export default function AddService(props) {
       }
     };
   
-
-    await dispatch(serviceActions.createServices(newService));
-   
+    // post to next api
+    const res = await fetch('/api/services', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newService)
+    });
   
     handleClose(newService)
   }
