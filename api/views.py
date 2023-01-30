@@ -19,6 +19,9 @@ from . import serializers
 from events import models as event_models
 from services import models as service_models
 from contacts import models as contact_models
+from datetime import datetime, timedelta
+
+one_week_ago = datetime.now() - timedelta(weeks=1)
 
 class AttrDictEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -247,7 +250,7 @@ def service_detail(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class ServiceViewSet(viewsets.ModelViewSet):
-    queryset = service_models.Service.objects.all()
+    queryset = service_models.Service.objects.all().filter(event__event_date__gte=one_week_ago).order_by('event__event_date')
     serializer_class = serializers.ServiceSerializer
 
     def create(self, request, *args, **kwargs):
